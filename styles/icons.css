@@ -1,0 +1,128 @@
+.icon {
+	--icon-scale: 2;
+	background: url(../images/new_Master_Icon.jpg);
+	background-position: 0 0;
+	background-size: calc(var(--icon-scale) * 512px), auto, cover;
+	width: calc(var(--icon-scale) * 20px);
+	height: calc(var(--icon-scale) * 28px);
+}
+
+.icon.durability-reduction-1 {
+}
+
+.icon.pvp-defence-rate-increase {
+	background-position-x: calc(var(--icon-scale) * -20px);
+}
+
+.icon.maximum-sd-increase {
+	background-position-x: calc(var(--icon-scale) * -40px);
+}
+
+.icon.auto-mana-recovery-increase {
+	background-position-x: calc(var(--icon-scale) * -60px);
+}
+
+.icon.XXX-skull {
+	background-position-x: calc(var(--icon-scale) * -80px);
+}
+
+.icon.durability-reduction-2 {
+	background-position-x: calc(var(--icon-scale) * -100px);
+}
+
+.icon.sd-recovery-speed-increase {
+	background-position-x: calc(var(--icon-scale) * -120px);
+}
+
+.icon.automatic-hp-recovery-increase {
+	background-position-x: calc(var(--icon-scale) * -140px);
+}
+
+.icon.XXX-spark {
+	background-position-x: calc(var(--icon-scale) * -160px);
+}
+
+.icon.defense-increase {
+	background-position-x: calc(var(--icon-scale) * -180px);
+}
+
+.icon.automatic-ag-recovery-increase {
+	background-position-x: calc(var(--icon-scale) * -200px);
+}
+
+.icon.XXX-crystal {
+	background-position-x: calc(var(--icon-scale) * -220px);
+}
+
+.icon.durability-reduction-3 {
+	background-position-x: calc(var(--icon-scale) * -240px);
+}
+
+.icon.defense-success-rate-increase {
+	background-position-x: calc(var(--icon-scale) * -260px);
+}
+
+.icon.XXX-bless {
+	background-position-x: calc(var(--icon-scale) * -280px);
+}
+
+.icon.armor-set-bonus-increase {
+	background-position-x: calc(var(--icon-scale) * -300px);
+}
+
+.icon.vengeance {
+	background-position-x: calc(var(--icon-scale) * -320px);
+}
+
+.icon.energy-increase {
+	background-position-x: calc(var(--icon-scale) * -340px);
+}
+
+.icon.stamina-increase {
+	background-position-x: calc(var(--icon-scale) * -360px);
+}
+
+.icon.agility-increase {
+	background-position-x: calc(var(--icon-scale) * -380px);
+}
+
+.icon.strength-increase {
+	background-position-x: calc(var(--icon-scale) * -400px);
+}
+
+.icon.XXX-wing-blue {
+	background-position-x: calc(var(--icon-scale) * -420px);
+}
+
+.icon.XXX-wing-red {
+	background-position-x: calc(var(--icon-scale) * -440px);
+}
+
+.icon.XXX-wing-green {
+	background-position-x: calc(var(--icon-scale) * -40px);
+	background-position-y: calc(var(--icon-scale) * -84px);
+}
+
+.icon.elemental-def-increase {
+	background-position-x: calc(var(--icon-scale) * -60px);
+	background-position-y: calc(var(--icon-scale) * -308px);
+}
+
+.icon.protection-shield {
+	background-position-x: calc(var(--icon-scale) * -460px);
+	background-position-y: calc(var(--icon-scale) * -336px);
+}
+
+.icon.weapon-block {
+	background-position-x: calc(var(--icon-scale) * -480px);
+	background-position-y: calc(var(--icon-scale) * -336px);
+}
+
+.icon.shield-block {
+	background-position-y: calc(var(--icon-scale) * -364px);
+}
+
+.icon.steel-armor {
+	background-position-x: calc(var(--icon-scale) * -20px);
+	background-position-y: calc(var(--icon-scale) * -364px);
+}
