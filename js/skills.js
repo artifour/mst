@@ -270,5 +270,180 @@ export const Skills = {
         function (level) { return level; },
         20,
         {ProtectionShield: 10}
+    ),
+    AttackSuccessRateIncrease: new Skill(
+        'Attack Success Rate Increase',
+        'Attack success rate increases by {value}.',
+        'attack-success-rate-increase',
+        function (level) { return level; },
+        20
+    ),
+    CycloneStrengthener: new Skill(
+        'Cyclone Strengthener',
+        'Cyclone skill damage increases by {value}.',
+        'cyclone-strengthener',
+        function (level) { return level; },
+        20
+    ),
+    LightningStrengthener: new Skill(
+        'Lightning Strengthener',
+        'Lightning skill damage increases by {value}.',
+        'lightning-strengthener',
+        function (level) { return level; },
+        20
+    ),
+    TwistingSlashStrengthener: new Skill(
+        'Twisting Slash Strengthener',
+        'Twisting Slash skill damage increases by {value}.',
+        'twisting-slash-strengthener',
+        function (level) { return level; },
+        20
+    ),
+    PowerSlashStrengthener: new Skill(
+        'Power Slash Strengthener',
+        'Power Slash skill damage increases by {value}.',
+        'power-slash-strengthener',
+        function (level) { return level; },
+        20
+    ),
+    FlameStrengthener: new Skill(
+        'Flame Strengthener',
+        'Flame skill damage increases by {value}.',
+        'flame-strengthener',
+        function (level) { return level; },
+        20
+    ),
+    BlastStrengthener: new Skill(
+        'Blast Strengthener',
+        'Blast skill damage increases by {value}.',
+        'blast-strengthener',
+        function (level) { return level; },
+        20,
+        {LightningStrengthener: 10}
+    ),
+    WeaponMastery: new Skill(
+        'Weapon Mastery',
+        'Attack power increases by {value}.',
+        'weapon-mastery',
+        function (level) { return level; },
+        20,
+        {TwistingSlashStrengthener: 10, PowerSlashStrengthener: 10}
+    ),
+    InfernoStrengthener: new Skill(
+        'Inferno Strengthener',
+        'Inferno skill damage increases by {value}.',
+        'inferno-strengthener',
+        function (level) { return level; },
+        20,
+        {FlameStrengthener: 10}
+    ),
+    EvilSpiritStrengthener: new Skill(
+        'Evil Spirit Strengthener',
+        'Evil Spirit skill damage increases by {value}.',
+        'evil-spirit-strengthener',
+        function (level) { return level; },
+        20
+    ),
+    MagicMastery: new Skill(
+        'Magic Mastery',
+        'Wizardry increases by {value}.',
+        'magic-mastery',
+        function (level) { return level; },
+        20,
+        {EvilSpiritStrengthener: 10}
+    ),
+    MaximumHPIncrease: new Skill(
+        'Maximum HP Increase',
+        'Max HP increases by {value}.',
+        'maximum-hp-increase',
+        function (level) { return 250*level; },
+        20
+    ),
+    FireSlashStrengthener: new Skill(
+        'Fire Slash Strengthener',
+        'Fire Slash damage increases by {value} and Skill range becomes 3',
+        'fire-slash-strengthener',
+        function (level) { return level; },
+        20
+    ),
+    IceStrengthener: new Skill(
+        'Ice Strengthener',
+        'Ice skill damage increases by {value}.',
+        'ice-strengthener',
+        function (level) { return level; },
+        20
+    ),
+    MaximumManaIncrease: new Skill(
+        'Maximum Mana Increase',
+        'Max Mana increases by {value}.',
+        'maximum-mana-increase',
+        function (level) { return 125*level; },
+        20
+    ),
+    FlameStrikeStrengthener: new Skill(
+        'Flame Strike Strengthener',
+        'Flame Strike damage increases by {value}.',
+        'flame-strike-strengthener',
+        function (level) { return level; },
+        20
+    ),
+    MaximumAGIncrease: new Skill(
+        'Maximum AG Increase',
+        'Max AG increases by {value}.',
+        'maximum-ag-increase',
+        function (level) { return level; },
+        20
+    ),
+    FireSlashMastery: new Skill(
+        'Fire Slash Mastery',
+        'Fire Slash skill\'s defense reduction increases by {value}%.',
+        'fire-slash-mastery',
+        function (level) { return level; },
+        20,
+        {FireSlashStrengthener: 10}
+    ),
+    GiganticStormStrengthener: new Skill(
+        'Gigantic Storm Strengthener',
+        'Gigantic Storm skill damage increases by {value}.',
+        'gigantic-storm-strengthener',
+        function (level) { return level; },
+        20
+    ),
+    MaxHPBoost: new Skill(
+        'Max HP Boost',
+        'Boosts HP to increase Max HP by {value}.',
+        'max-hp-boost',
+        function (level) { return 500*level; },
+        20
+    ),
+    BloodStorm: new Skill(
+        'Blood Storm',
+        'Learn \'Blood Storm\'. Inflict DMG to the target within 3 tiles from the caster and those around the target. This skill can be used again after 5 seconds. (Blade Master can be used as a combo and it is recommended for a melee-type character.).',
+        'blood-storm',
+        function (level) { return level; },
+        10
+    ),
+    EarthPrison: new Skill(
+        'Earth Prison',
+        'Learn \'Earth Prison\'. Inflicts strong damage upon targets and immobilizes them for {value} sec.',
+        'earth-prison',
+        function (level) { return 4 + level; },
+        10
+    ),
+    BloodStormStrengthener: new Skill(
+        'Blood Storm Strengthener',
+        'Increases Blood Storm\'s DMG by {value} and change the cooldown time to 3 seconds.',
+        'blood-storm-strengthener',
+        function (level) { return level; },
+        20,
+        {BloodStorm: 1}
+    ),
+    EarthPrisonStrengthener: new Skill(
+        'Earth Prison Strengthener',
+        'Increases Earth Prison damage by {value}, and changes Cooldown to 3 sec.',
+        'earth-prison-strengthener',
+        function (level) { return level; },
+        20,
+        {EarthPrison: 1}
     )
 };

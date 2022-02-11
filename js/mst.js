@@ -33,7 +33,8 @@ const MST = (function () {
             branchElem.classList.add(branchName);
 
             const branchTitleElem = this._createElement('table-column-title');
-            branchTitleElem.innerHTML = this.skillsTree.getBranchTitle(branchName);
+            const branchTitle = this.skillsTree.getBranchTitle(branchName);
+            branchTitleElem.innerHTML = `${branchTitle}: 0`;
 
             branchElem.appendChild(branchTitleElem);
 
@@ -165,12 +166,14 @@ const MST = (function () {
 
             const currentSkillLevel = this.skillsTree.getSkillLevel(skillName);
             const skillLevel = this.skillsTree.increaseSkillLevel(skillName, e.ctrlKey ? 10 : 1);
-
             if (skillLevel === currentSkillLevel) {
                 return;
             }
 
+            const branchName = this.skillsTree.getSkillBranchName(skillName);
+
             this._updateSkillDescription(skillName);
+            this._updateBranchLevel(branchName);
 
             const skillLevelElem = skillElem.querySelector('.skill-level');
             skillLevelElem.innerHTML = skillLevel;
@@ -180,9 +183,8 @@ const MST = (function () {
                 return;
             }
 
-            const branchName = this.skillsTree.getSkillBranchName(skillName);
-            const rowLevel = this.skillsTree.getBranchRankLevel(branchName, rank);
-            if (rowLevel < 10) {
+            const rankLevel = this.skillsTree.getBranchRankLevel(branchName, rank);
+            if (rankLevel < 10) {
                 return;
             }
 
@@ -218,7 +220,10 @@ const MST = (function () {
                 return;
             }
 
+            const branchName = this.skillsTree.getSkillBranchName(skillName);
+
             this._updateSkillDescription(skillName);
+            this._updateBranchLevel(branchName);
 
             const skillLevelElem = skillElem.querySelector('.skill-level');
             skillLevelElem.innerHTML = skillLevel;
@@ -232,14 +237,27 @@ const MST = (function () {
                 this._enableSkill(dependentSkillName, false);
             }
 
-            const branchName = this.skillsTree.getSkillBranchName(skillName);
             const rank = this.skillsTree.getSkillRank(skillName);
-            const rowLevel = this.skillsTree.getBranchRankLevel(branchName, rank);
-            if (rowLevel >= 10) {
+            const rankLevel = this.skillsTree.getBranchRankLevel(branchName, rank);
+            if (rankLevel >= 10) {
                 return;
             }
 
             this._enableBranchRow(branchName, rank + 1, false);
+        }
+
+        /**
+         * @param {string} branchName
+         * @private
+         */
+        _updateBranchLevel(branchName) {
+            const branchTitle = this.skillsTree.getBranchTitle(branchName);
+            const branchLevel = this.skillsTree.getBranchLevel(branchName);
+
+            const branchTitleElem = this.container.querySelector(
+                `.table-column-container.${branchName} .table-column-title`
+            );
+            branchTitleElem.innerHTML = `${branchTitle}: ${branchLevel}`;
         }
 
         /**
@@ -288,7 +306,11 @@ const MST = (function () {
                 skillDescriptionNextLevelElem.hidden = true;
             }
 
-            this._fillSkillDescriptionRequirements(skillDescriptionRequirementsElem, skillName, rank);
+            if (skillLevel < skillMaxLevel) {
+                this._fillSkillDescriptionRequirements(skillDescriptionRequirementsElem, skillName, rank);
+            } else {
+                skillDescriptionRequirementsElem.hidden = true;
+            }
 
             skillDescriptionElem.hidden = false;
         }

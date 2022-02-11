@@ -21,6 +21,7 @@ Skills.MG_WingofRuinAttackPowUp = new Skill(
  * @type SkillTreeSchema
  */
 const MGSkillsTreeSchema = {
+    name: 'Duel Master',
     green: {
         name: 'Solidity',
         rows: [
@@ -111,57 +112,84 @@ const MGSkillsTreeSchema = {
         name: 'Fighting Spirit',
         rows: [
             [
-                null,
-                null,
-                null,
-                null
-            ],
-            [
-                null,
+                'AttackSuccessRateIncrease',
                 null,
                 null,
                 null
             ],
             [
+                'CycloneStrengthener',
+                'LightningStrengthener',
+                'TwistingSlashStrengthener',
+                'PowerSlashStrengthener'
+            ],
+            [
+                'FlameStrengthener',
+                {
+                    name: 'BlastStrengthener',
+                    dependency: SkillsTreeSkillDependencies.vertical
+                },
+                null,
+                {
+                    name: 'WeaponMastery',
+                    dependency: SkillsTreeSkillDependencies.double_left
+                }
+            ],
+            [
+                {
+                    name: 'InfernoStrengthener',
+                    dependency: SkillsTreeSkillDependencies.vertical
+                },
+                'EvilSpiritStrengthener',
+                {
+                    name: 'MagicMastery',
+                    dependency: SkillsTreeSkillDependencies.horizontal
+                },
+                'MaximumHPIncrease'
+            ],
+            [
+                null,
+                'FireSlashStrengthener',
+                'IceStrengthener',
+                {
+                    name: 'MaximumManaIncrease',
+                    dependency: SkillsTreeSkillDependencies.vertical
+                }
+            ],
+            [
+                'FlameStrikeStrengthener',
                 null,
                 null,
+                {
+                    name: 'MaximumAGIncrease',
+                    dependency: SkillsTreeSkillDependencies.vertical
+                }
+            ],
+            [
                 null,
+                {
+                    name: 'FireSlashMastery',
+                    dependency: SkillsTreeSkillDependencies.vertical_double
+                },
+                'GiganticStormStrengthener',
+                'MaxHPBoost'
+            ],
+            [
+                null,
+                'BloodStorm',
+                'EarthPrison',
                 null
             ],
             [
                 null,
-                null,
-                null,
-                null
-            ],
-            [
-                null,
-                null,
-                null,
-                null
-            ],
-            [
-                null,
-                null,
-                null,
-                null
-            ],
-            [
-                null,
-                null,
-                null,
-                null
-            ],
-            [
-                null,
-                null,
-                null,
-                null
-            ],
-            [
-                null,
-                null,
-                null,
+                {
+                    name: 'BloodStormStrengthener',
+                    dependency: SkillsTreeSkillDependencies.vertical
+                },
+                {
+                    name: 'EarthPrisonStrengthener',
+                    dependency: SkillsTreeSkillDependencies.vertical
+                },
                 null
             ]
         ]

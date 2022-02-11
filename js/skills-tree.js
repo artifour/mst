@@ -6,7 +6,7 @@ import {Skills} from './skills.js';
 /** @typedef {SkillTreeSchemaCell[]} SkillTreeSchemaRow */
 /** @typedef {{name: string, rows: SkillTreeSchemaRow[]}} SkillTreeSchemaBranch */
 /**
- * @typedef {{green: SkillTreeSchemaBranch, blue: SkillTreeSchemaBranch, red: SkillTreeSchemaBranch}} SkillTreeSchema
+ * @typedef {{name: string, green: SkillTreeSchemaBranch, blue: SkillTreeSchemaBranch, red: SkillTreeSchemaBranch}} SkillTreeSchema
  */
 
 export const SkillsTreeBranches = Object.freeze({
@@ -19,6 +19,7 @@ export const SkillsTreeSkillDependencies = Object.freeze({
     vertical: 'vertical',
     vertical_double: 'vertical double',
     horizontal: 'horizontal',
+    double_left: 'double-left'
 });
 
 export const SkillsTreeClasses = {
@@ -83,22 +84,24 @@ export class SkillsTree {
     init(skillsTreeClass) {
         this.schema = SkillsTreeSchemas[skillsTreeClass];
         this.skills = {};
-        for (let i = 0; i < this.schema[SkillsTreeBranches.green].rows.length; i++) {
-            /** @type SkillTreeSchemaRow */
-            const row = this.schema[SkillsTreeBranches.green].rows[i];
-            for (let j = 0; j < 4; j++) {
-                if (!row[j]) {
-                    continue;
+        for (const branchName in SkillsTreeBranches) {
+            for (let i = 0; i < this.schema[branchName].rows.length; i++) {
+                /** @type SkillTreeSchemaRow */
+                const row = this.schema[branchName].rows[i];
+                for (let j = 0; j < 4; j++) {
+                    if (!row[j]) {
+                        continue;
+                    }
+
+                    const skillName = (typeof row[j] === 'object') ? row[j].name : row[j];
+
+                    const requirementSkillLevels = Skills[skillName].getRequirements();
+                    for (const requirementSkillName in requirementSkillLevels) {
+                        this.skills[requirementSkillName].dependentSkillNames.push(skillName);
+                    }
+
+                    this.skills[skillName] = new SkillInstance(branchName, i + 1, 0);
                 }
-
-                const skillName = (typeof row[j] === 'object') ? row[j].name : row[j];
-
-                const requirementSkillLevels = Skills[skillName].getRequirements();
-                for (const requirementSkillName in requirementSkillLevels) {
-                    this.skills[requirementSkillName].dependentSkillNames.push(skillName);
-                }
-
-                this.skills[skillName] = new SkillInstance(SkillsTreeBranches.green, i + 1, 0);
             }
         }
     }
@@ -126,13 +129,13 @@ export class SkillsTree {
      */
     getBranchLevel(branchName) {
         let level = 0;
-        this.skills.forEach(function (skill) {
-            if (skill.branchName !== branchName) {
-                return;
+        for (const skillName in this.skills) {
+            if (this.skills[skillName].branchName !== branchName) {
+                continue;
             }
 
-            level += skill.level;
-        });
+            level += this.skills[skillName].level;
+        }
 
         return level;
     }
