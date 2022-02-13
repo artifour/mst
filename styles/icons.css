@@ -177,7 +177,7 @@
     background-position-y: calc(var(--icon-scale) * -56px);
 }
 
-.icon.monster-attack-line-increment {
+.icon.monster-attack-life-increment {
     background-position-x: calc(var(--icon-scale) * -180px);
     background-position-y: calc(var(--icon-scale) * -56px);
 }
@@ -317,7 +317,7 @@
 }
 
 .icon.fire-slash-mastery {
-    background-position-x: calc(var(--icon-scale) * -340px);
+    background-position-x: calc(var(--icon-scale) * -360px);
     background-position-y: calc(var(--icon-scale) * -196px);
 }
 

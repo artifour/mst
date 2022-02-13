@@ -258,7 +258,7 @@ export const Skills = {
     ),
     SteelArmor: new Skill(
         'Steel Armor',
-        'Has impenetrable bacis {value} defense, and this defense can\'t be ignored.',
+        'Has impenetrable basic {value} defense, and this defense can\'t be ignored.',
         'steel-armor',
         function (level) { return level; },
         20
@@ -299,13 +299,6 @@ export const Skills = {
         function (level) { return level; },
         20
     ),
-    PowerSlashStrengthener: new Skill(
-        'Power Slash Strengthener',
-        'Power Slash skill damage increases by {value}.',
-        'power-slash-strengthener',
-        function (level) { return level; },
-        20
-    ),
     FlameStrengthener: new Skill(
         'Flame Strengthener',
         'Flame skill damage increases by {value}.',
@@ -320,14 +313,6 @@ export const Skills = {
         function (level) { return level; },
         20,
         {LightningStrengthener: 10}
-    ),
-    WeaponMastery: new Skill(
-        'Weapon Mastery',
-        'Attack power increases by {value}.',
-        'weapon-mastery',
-        function (level) { return level; },
-        20,
-        {TwistingSlashStrengthener: 10, PowerSlashStrengthener: 10}
     ),
     InfernoStrengthener: new Skill(
         'Inferno Strengthener',
@@ -359,13 +344,6 @@ export const Skills = {
         function (level) { return 250*level; },
         20
     ),
-    FireSlashStrengthener: new Skill(
-        'Fire Slash Strengthener',
-        'Fire Slash damage increases by {value} and Skill range becomes 3',
-        'fire-slash-strengthener',
-        function (level) { return level; },
-        20
-    ),
     IceStrengthener: new Skill(
         'Ice Strengthener',
         'Ice skill damage increases by {value}.',
@@ -380,32 +358,10 @@ export const Skills = {
         function (level) { return 125*level; },
         20
     ),
-    FlameStrikeStrengthener: new Skill(
-        'Flame Strike Strengthener',
-        'Flame Strike damage increases by {value}.',
-        'flame-strike-strengthener',
-        function (level) { return level; },
-        20
-    ),
     MaximumAGIncrease: new Skill(
         'Maximum AG Increase',
         'Max AG increases by {value}.',
         'maximum-ag-increase',
-        function (level) { return level; },
-        20
-    ),
-    FireSlashMastery: new Skill(
-        'Fire Slash Mastery',
-        'Fire Slash skill\'s defense reduction increases by {value}%.',
-        'fire-slash-mastery',
-        function (level) { return level; },
-        20,
-        {FireSlashStrengthener: 10}
-    ),
-    GiganticStormStrengthener: new Skill(
-        'Gigantic Storm Strengthener',
-        'Gigantic Storm skill damage increases by {value}.',
-        'gigantic-storm-strengthener',
         function (level) { return level; },
         20
     ),
@@ -445,5 +401,182 @@ export const Skills = {
         function (level) { return level; },
         20,
         {EarthPrison: 1}
+    ),
+    AttackRate: new Skill(
+        'Attack Rate',
+        'PvP attack success rate increases by {value}.',
+        'attack-rate',
+        function (level) { return level; },
+        20
+    ),
+    TwoHandedSwordStrengthener: new Skill(
+        'Two-handed Sword Strengthener',
+        'Physical attack power increases by {value} while equipping Two-handed Sword.',
+        'two-handed-sword-strengthener',
+        function (level) { return level; },
+        20
+    ),
+    TwoHandedSwordMastery: new Skill(
+        'Two-handed Sword Mastery',
+        '{value} PvP attack power bonus will be added while equipping Two-handed Sword.',
+        'two-handed-sword-mastery',
+        function (level) { return level; },
+        20,
+        {TwoHandedSwordStrengthener: 10}
+    ),
+    OneHandedSwordStrengthener: new Skill(
+        'One-handed Sword Strengthener',
+        'Physical attack power increases by {value} while equipping One-handed Sword.',
+        'one-handed-sword-strengthener',
+        function (level) { return level; },
+        20
+    ),
+    OneHandedSwordMastery: new Skill(
+        'One-handed Sword Mastery',
+        'Attack speed increases by {value} while equipping One-handed Sword.',
+        'one-handed-sword-mastery',
+        function (level) { return level; },
+        20,
+        {OneHandedSwordStrengthener: 10}
+    ),
+    OneHandedStaffStrengthener: new Skill(
+        'One-handed Staff Strengthener',
+        'Wizardry increases by {value} while equipping One-handed Staff.',
+        'one-handed-staff-strengthener',
+        function (level) { return level; },
+        20
+    ),
+    OneHandedStaffMastery: new Skill(
+        'One-handed Sword Mastery',
+        'Attack speed increases by {value} while equipping One-handed Staff.',
+        'one-handed-staff-mastery',
+        function (level) { return level; },
+        20,
+        {OneHandedStaffStrengthener: 10}
+    ),
+    TwoHandedStaffStrengthener: new Skill(
+        'Two-handed Staff Strengthener',
+        'Wizardry increases by {value} while equipping Two-handed Staff.',
+        'two-handed-staff-strengthener',
+        function (level) { return level; },
+        20
+    ),
+    TwoHandedStaffMastery: new Skill(
+        'Two-handed Staff Mastery',
+        '{value} PvP attack power increases by additional {value} while equipping Two-handed Staff.',
+        'two-handed-staff-mastery',
+        function (level) { return level; },
+        20,
+        {TwoHandedStaffStrengthener: 10}
+    ),
+    ManaReduction: new Skill(
+        'Mana Reduction',
+        'Mana cost decreases by {value}.',
+        'mana-reduction',
+        function (level) { return level; },
+        20
+    ),
+    MonsterAttackSDIncrement: new Skill(
+        'Monster Attack SD Increment',
+        'Recovers SD by max SD/{value} when killing a monster.',
+        'monster-attack-sd-increment',
+        function (level) { return level; },
+        20
+    ),
+    MonsterAttackLifeIncrement: new Skill(
+        'Monster Attack Life Increment',
+        'Recovers HP by max HP/{value} when killing a monster.',
+        'monster-attack-life-increment',
+        function (level) { return level; },
+        20
+    ),
+    MonsterAttackManaIncrement: new Skill(
+        'Monster Attack Mana Increment',
+        'Recovers Mana by max mana/{value} when killing a monster.',
+        'monster-attack-mana-increment',
+        function (level) { return level; },
+        20,
+        {MonsterAttackLifeIncrement: 10}
+    ),
+    MinimumWizardryIncrease: new Skill(
+        'Minimum Wizardry Increase',
+        'Min. Wizardry increase by {value}.',
+        'minimum-wizardry-increase',
+        function (level) { return level; },
+        20
+    ),
+    MaximumWizardryIncrease: new Skill(
+        'Maximum Wizardry Increase',
+        'Max. Wizardry increase by {value}.',
+        'maximum-wizardry-increase',
+        function (level) { return level; },
+        20,
+        {MinimumWizardryIncrease: 10}
+    ),
+    MinimumAttackPowerIncrease: new Skill(
+        'Minimum Attack Power Increase',
+        'Min. attack power increases by {value}.',
+        'minimum-attack-power-increase',
+        function (level) { return level; },
+        20
+    ),
+    MaximumAttackPowerIncrease: new Skill(
+        'Maximum Attack Power Increase',
+        'Max. attack power increases by {value}.',
+        'maximum-attack-power-increase',
+        function (level) { return level; },
+        20,
+        {MinimumAttackPowerIncrease: 10}
+    ),
+    IncreasesCriticalDamageRate: new Skill(
+        'Increases critical damage rate',
+        'Critical damage rate increases by {value}%.',
+        'increases-critical-damage-rate',
+        function (level) { return level; },
+        20
+    ),
+    IncreasesExcellentDamageRate: new Skill(
+        'Increases excellent damage rate',
+        'Excellent damage rate increases by {value}%.',
+        'increases-excellent-damage-rate',
+        function (level) { return level; },
+        20,
+        {IncreasesCriticalDamageRate: 10}
+    ),
+    RestoresAllMana: new Skill(
+        'Restores all Mana',
+        'You have a {value}% chance to fully recover your mana any time you take damage.',
+        'restores-all-mana',
+        function (level) { return level; },
+        20
+    ),
+    RestoresAllHP: new Skill(
+        'Restores all HP',
+        'You have a {value}% chance to fully recover your HP any time you take damage.',
+        'restores-all-hp',
+        function (level) { return level; },
+        20
+    ),
+    RestoresAllSD: new Skill(
+        'Restores all SD',
+        '{value}% chance to fully recover your SD when attacking a target.',
+        'restores-all-sd',
+        function (level) { return level; },
+        20,
+        {RestoresAllHP: 10}
+    ),
+    AbsorbLife: new Skill(
+        'Absorb Life',
+        'Every successful attack on the enemy recovers HP by {value} with a 50% chance.',
+        'absorb-life',
+        function (level) { return level; },
+        20
+    ),
+    IncreasesChanceOfIgnoreDEF: new Skill(
+        'Increases change of ignore DEF',
+        'Chance to inflict damage ignoring enemy\'s defense increases by {value}%.',
+        'increases-chance-of-ignore-def',
+        function (level) { return level; },
+        20
     )
 };

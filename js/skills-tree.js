@@ -9,6 +9,8 @@ import {Skills} from './skills.js';
  * @typedef {{name: string, green: SkillTreeSchemaBranch, blue: SkillTreeSchemaBranch, red: SkillTreeSchemaBranch}} SkillTreeSchema
  */
 
+const MAX_TREE_LEVEL = 399;
+
 export const SkillsTreeBranches = Object.freeze({
     green: 'green',
     blue: 'blue',
@@ -107,6 +109,18 @@ export class SkillsTree {
     }
 
     /**
+     * @return {number}
+     */
+    getTreeLevel() {
+        let level = 0;
+        for (const skillName in this.skills) {
+            level += this.skills[skillName].level;
+        }
+
+        return level;
+    }
+
+    /**
      * @param {string} branchName
      * @returns {string}
      */
@@ -188,6 +202,11 @@ export class SkillsTree {
             return level;
         }
 
+        const treeLevel = this.getTreeLevel();
+        if (treeLevel + increment > MAX_TREE_LEVEL) {
+            increment = MAX_TREE_LEVEL - treeLevel;
+        }
+
         return this.skills[skillName].level = Math.min(maxLevel, level + increment);
     }
 
@@ -203,7 +222,6 @@ export class SkillsTree {
         }
 
         const planningLevel = Math.max(0, level - decrement);
-
         if ((planningLevel < 10) && this._hasLeveledDependentSkills(skillName)) {
             return this.skills[skillName].level = 10;
         }
@@ -234,6 +252,48 @@ export class SkillsTree {
      */
     getSkillMaxLevel(skillName) {
         return Skills[skillName].getMaxLevel();
+    }
+
+    /**
+     * @param {string} skillName
+     * @return {string}
+     */
+    getSkillTitle(skillName) {
+        return Skills[skillName].getTitle();
+    }
+
+    /**
+     * @param {string} skillName
+     * @param {number|null=} skillLevel
+     * @return {string}
+     */
+    getSkillDescription(skillName, skillLevel = null) {
+        if (skillLevel !== null) {
+            return Skills[skillName].getDescription(skillLevel);
+        }
+
+        const currentSkillLevel = this.getSkillLevel(skillName);
+        if (currentSkillLevel > 0) {
+            return Skills[skillName].getDescription(currentSkillLevel);
+        }
+
+        return Skills[skillName].getDescription(1);
+    }
+
+    /**
+     * @param {string} skillName
+     * @return {string}
+     */
+    getSkillIcon(skillName) {
+        return Skills[skillName].getIcon(this.getSkillLevel(skillName));
+    }
+
+    /**
+     * @param skillName
+     * @return {Requirements}
+     */
+    getSkillRequirements(skillName) {
+        return Skills[skillName].getRequirements() || {};
     }
 
     /**
@@ -280,7 +340,7 @@ export class SkillsTree {
             return true;
         }
 
-        const requirementSkillLevels = Skills[skillName].getRequirements();
+        const requirementSkillLevels = this.getSkillRequirements(skillName);
         for (const skillName in requirementSkillLevels) {
             if (this.getSkillLevel(skillName) < requirementSkillLevels[skillName]) {
                 return false;

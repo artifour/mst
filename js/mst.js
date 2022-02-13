@@ -1,5 +1,4 @@
-import {Skills} from './skills.js';
-import {} from './trees/mg.js';
+import './trees/mg.js';
 import {SkillsTreeBranches, SkillsTreeClasses, SkillsTree} from './skills-tree.js';
 
 const MST = (function () {
@@ -9,6 +8,9 @@ const MST = (function () {
         /** @type SkillsTree */
         skillsTree;
 
+        /**
+         * @param {HTMLElement} container
+         */
         constructor(container) {
             this.container = container;
             this.skillsTree = new SkillsTree();
@@ -19,6 +21,9 @@ const MST = (function () {
             this.skillsTree.init(SkillsTreeClasses.MG);
 
             this.container.innerHTML = '';
+            const pointsElem = this._createDiv('points');
+            pointsElem.innerHTML = 'Points: 399';
+            this.container.appendChild(pointsElem);
             this._initBranch(SkillsTreeBranches.green);
             this._initBranch(SkillsTreeBranches.blue);
             this._initBranch(SkillsTreeBranches.red);
@@ -29,10 +34,10 @@ const MST = (function () {
          * @private
          */
         _initBranch(branchName) {
-            const branchElem = this._createElement('table-column-container');
+            const branchElem = this._createDiv('table-column-container');
             branchElem.classList.add(branchName);
 
-            const branchTitleElem = this._createElement('table-column-title');
+            const branchTitleElem = this._createDiv('table-column-title');
             const branchTitle = this.skillsTree.getBranchTitle(branchName);
             branchTitleElem.innerHTML = `${branchTitle}: 0`;
 
@@ -46,7 +51,7 @@ const MST = (function () {
 
             this.container.appendChild(branchElem);
 
-            this._enableBranchRow(branchName, 1);
+            this._enableBranchRank(branchName, 1);
         }
 
         /**
@@ -55,20 +60,19 @@ const MST = (function () {
          * @private
          */
         _createBranchRow(row) {
-            const rowElem = this._createElement('table-row');
+            const rowElem = this._createDiv('table-row');
 
             for (let i = 0; i < 4; i++) {
-                const cellElem = this._createElement('table-cell');
+                const cellElem = this._createDiv('table-cell');
                 rowElem.appendChild(cellElem);
 
                 if (!row[i]) {
                     continue;
                 }
 
-                const skillElem = this._createSkillElem(row[i]);
+                const skillElem = this._createSkill(row[i]);
                 cellElem.appendChild(skillElem);
             }
-
 
             return rowElem;
         }
@@ -78,29 +82,29 @@ const MST = (function () {
          * @return {HTMLDivElement}
          * @private
          */
-        _createSkillElem(skill) {
+        _createSkill(skill) {
             const skillName = typeof skill === 'object' ? skill.name : skill;
 
-            const skillElem = this._createElement('skill');
+            const skillElem = this._createDiv('skill');
             skillElem.classList.add('disabled');
             skillElem.onclick = this._increaseSkillLevel.bind(this);
             skillElem.oncontextmenu = this._decreaseSkillLevel.bind(this);
-            skillElem.onmouseenter = this._displaySkillDescription.bind(this);
-            skillElem.onmousemove = this._updateSkillDescriptionPosition.bind(this);
-            skillElem.onmouseleave = this._hideSkillDescription.bind(this);
+            skillElem.onmouseenter = this._displaySkillTooltip.bind(this);
+            skillElem.onmousemove = this._updateSkillTooltipPosition.bind(this);
+            skillElem.onmouseleave = this._hideSkillTooltip.bind(this);
             skillElem.id = skillName;
 
             if (typeof skill === 'object') {
-                const skillDependency = this._createElement('skill-connector');
+                const skillDependency = this._createDiv('skill-connector');
                 skillDependency.className = `skill-connector ${skill.dependency}`;
                 skillElem.appendChild(skillDependency);
             }
 
-            const iconElem = this._createElement('icon');
-            iconElem.classList.add(Skills[skillName].getIcon());
+            const iconElem = this._createDiv('icon');
+            iconElem.classList.add(this.skillsTree.getSkillIcon(skillName));
             skillElem.appendChild(iconElem);
 
-            const skillLevelElem = this._createElement('skill-level');
+            const skillLevelElem = this._createDiv('skill-level');
             skillLevelElem.innerHTML = '0';
             skillElem.appendChild(skillLevelElem);
 
@@ -112,7 +116,7 @@ const MST = (function () {
          * @return {HTMLDivElement}
          * @private
          */
-        _createElement(className) {
+        _createDiv(className) {
             const element = document.createElement('div');
             element.classList.add(className);
 
@@ -125,7 +129,7 @@ const MST = (function () {
          * @param {boolean=} enable
          * @private
          */
-        _enableBranchRow(branchName, rank, enable = true) {
+        _enableBranchRank(branchName, rank, enable = true) {
             const skillNames = this.skillsTree.getBranchRankSkillNames(branchName, rank);
             for (let i = 0; i < skillNames.length; i++) {
                 this._enableSkill(skillNames[i], enable);
@@ -172,8 +176,9 @@ const MST = (function () {
 
             const branchName = this.skillsTree.getSkillBranchName(skillName);
 
-            this._updateSkillDescription(skillName);
+            this._updateSkillTooltip(skillName);
             this._updateBranchLevel(branchName);
+            this._updateTreeLevel();
 
             const skillLevelElem = skillElem.querySelector('.skill-level');
             skillLevelElem.innerHTML = skillLevel;
@@ -188,7 +193,7 @@ const MST = (function () {
                 return;
             }
 
-            this._enableBranchRow(branchName, rank + 1);
+            this._enableBranchRank(branchName, rank + 1);
 
             if (skillLevel < 10) {
                 return;
@@ -222,8 +227,9 @@ const MST = (function () {
 
             const branchName = this.skillsTree.getSkillBranchName(skillName);
 
-            this._updateSkillDescription(skillName);
+            this._updateSkillTooltip(skillName);
             this._updateBranchLevel(branchName);
+            this._updateTreeLevel();
 
             const skillLevelElem = skillElem.querySelector('.skill-level');
             skillLevelElem.innerHTML = skillLevel;
@@ -243,7 +249,7 @@ const MST = (function () {
                 return;
             }
 
-            this._enableBranchRow(branchName, rank + 1, false);
+            this._enableBranchRank(branchName, rank + 1, false);
         }
 
         /**
@@ -261,102 +267,108 @@ const MST = (function () {
         }
 
         /**
+         * @private
+         */
+        _updateTreeLevel() {
+            const pointsElem = this.container.querySelector('.points');
+            pointsElem.innerHTML = 'Points: ' + (399 - this.skillsTree.getTreeLevel());
+        }
+
+        /**
          * @param {MouseEvent} e
          * @private
          */
-        _displaySkillDescription(e) {
+        _displaySkillTooltip(e) {
             e.preventDefault();
 
             const skillElem = e.currentTarget;
             const skillName = skillElem.id;
 
-            this._updateSkillDescription(skillName);
+            this._updateSkillTooltip(skillName);
         }
 
         /**
          * @param {string} skillName
          * @private
          */
-        _updateSkillDescription(skillName) {
+        _updateSkillTooltip(skillName) {
             const skillLevel = this.skillsTree.getSkillLevel(skillName);
             const skillMaxLevel = this.skillsTree.getSkillMaxLevel(skillName);
             const rank = this.skillsTree.getSkillRank(skillName);
 
-            const skillDescriptionElem = document.getElementById('mst-skill-description');
-            const skillDescriptionTitleElem = skillDescriptionElem.querySelector('.title');
-            const skillDescriptionLevelElem = skillDescriptionElem.querySelector('.level');
-            const skillDescriptionDescriptionElem = skillDescriptionElem.querySelector('.description');
-            const skillDescriptionNextLevelElem = skillDescriptionElem.querySelector('.next-level');
-            const skillDescriptionRequirementsElem = skillDescriptionElem.querySelector('.requirements');
+            const skillTooltipElem = document.getElementById('mst-skill-tooltip');
+            const skillTooltipTitleElem = skillTooltipElem.querySelector('.title');
+            const skillTooltipLevelElem = skillTooltipElem.querySelector('.level');
+            const skillTooltipDescriptionElem = skillTooltipElem.querySelector('.description');
+            const skillTooltipNextLevelElem = skillTooltipElem.querySelector('.next-level');
+            const skillTooltipRequirementsElem = skillTooltipElem.querySelector('.requirements');
 
-            skillDescriptionTitleElem.innerHTML = Skills[skillName].getTitle();
-            skillDescriptionLevelElem.innerHTML =
+            skillTooltipTitleElem.innerHTML = this.skillsTree.getSkillTitle(skillName);
+            skillTooltipLevelElem.innerHTML =
                 `Rank ${rank}, Skill Level: ${skillLevel}/${skillMaxLevel}`;
-            skillDescriptionDescriptionElem.innerHTML =
-                Skills[skillName].getDescription(skillLevel === 0 ? skillLevel + 1 : skillLevel);
+            skillTooltipDescriptionElem.innerHTML = this.skillsTree.getSkillDescription(skillName);
 
             if ((skillLevel > 0) && (skillLevel < skillMaxLevel)) {
-                skillDescriptionNextLevelElem.hidden = false;
-                skillDescriptionNextLevelElem.innerHTML = '';
+                skillTooltipNextLevelElem.hidden = false;
+                skillTooltipNextLevelElem.innerHTML = '';
 
-                const nextLevelDescriptionElem = document.createElement('p');
-                nextLevelDescriptionElem.innerHTML = Skills[skillName].getDescription(skillLevel + 1);
-                skillDescriptionNextLevelElem.appendChild(nextLevelDescriptionElem);
+                const nextLevelTooltipElem = document.createElement('p');
+                nextLevelTooltipElem.innerHTML = this.skillsTree.getSkillDescription(skillName, skillLevel + 1);
+                skillTooltipNextLevelElem.appendChild(nextLevelTooltipElem);
             } else {
-                skillDescriptionNextLevelElem.hidden = true;
+                skillTooltipNextLevelElem.hidden = true;
             }
 
             if (skillLevel < skillMaxLevel) {
-                this._fillSkillDescriptionRequirements(skillDescriptionRequirementsElem, skillName, rank);
+                this._fillSkillTooltipRequirements(skillTooltipRequirementsElem, skillName, rank);
             } else {
-                skillDescriptionRequirementsElem.hidden = true;
+                skillTooltipRequirementsElem.hidden = true;
             }
 
-            skillDescriptionElem.hidden = false;
+            skillTooltipElem.hidden = false;
         }
 
         /**
-         * @param {HTMLDivElement} skillDescriptionRequirementsElem
+         * @param {HTMLDivElement} skillTooltipRequirementsElem
          * @param {string} skillName
          * @param {number} rank
          * @private
          */
-        _fillSkillDescriptionRequirements(skillDescriptionRequirementsElem, skillName, rank) {
-            skillDescriptionRequirementsElem.innerHTML = '';
+        _fillSkillTooltipRequirements(skillTooltipRequirementsElem, skillName, rank) {
+            skillTooltipRequirementsElem.innerHTML = '';
 
             // всегда красный
             const requiredPointsElem = this._createParagraph('Required Points: 1');
             requiredPointsElem.classList.add('incomplete');
-            skillDescriptionRequirementsElem.appendChild(requiredPointsElem);
+            skillTooltipRequirementsElem.appendChild(requiredPointsElem);
 
             if (rank > 1) {
-                const requiresRankElem =
-                    this._createParagraph(`Requires Rank ${rank} skill of Lv. 10 or higher.`);
+                const requiresRankElem = this._createParagraph(`Requires Rank ${rank - 1} skill of Lv. 10 or higher.`);
 
                 const skillBranch = this.skillsTree.getSkillBranchName(skillName);
                 if (this.skillsTree.getBranchRankLevel(skillBranch, rank - 1) < 10) {
                     requiresRankElem.classList.add('incomplete');
                 }
 
-                skillDescriptionRequirementsElem.appendChild(requiresRankElem);
+                skillTooltipRequirementsElem.appendChild(requiresRankElem);
             }
 
-            const requirements = Skills[skillName].getRequirements();
+            const requirements = this.skillsTree.getSkillRequirements(skillName);
             for (const requirementSkillName in requirements) {
                 const requirementRank = this.skillsTree.getSkillRank(requirementSkillName);
-                const requirementSkillTitle = Skills[requirementSkillName].getTitle();
+                const requirementSkillTitle = this.skillsTree.getSkillTitle(requirementSkillName);
 
                 const requiresSkillElem = this._createParagraph(
-                    `Requires Rank ${requirementRank + 1} '${requirementSkillTitle}' skill of Lv. 10 or higher`
+                    `Requires Rank ${requirementRank} '${requirementSkillTitle}' skill of Lv. 10 or higher`
                 );
                 if (this.skillsTree.getSkillLevel(requirementSkillName) < 10) {
                     requiresSkillElem.classList.add('incomplete');
                 }
 
-                skillDescriptionRequirementsElem.appendChild(requiresSkillElem);
+                skillTooltipRequirementsElem.appendChild(requiresSkillElem);
             }
 
-            skillDescriptionRequirementsElem.hidden = false;
+            skillTooltipRequirementsElem.hidden = false;
         }
 
         /**
@@ -375,25 +387,25 @@ const MST = (function () {
          * @param {MouseEvent} e
          * @private
          */
-        _updateSkillDescriptionPosition(e) {
+        _updateSkillTooltipPosition(e) {
             e.preventDefault();
 
-            const skillDescriptionElem = document.getElementById('mst-skill-description');
-            const skillDescriptionHeight = skillDescriptionElem.clientHeight;
+            const skillTooltipElem = document.getElementById('mst-skill-tooltip');
+            const skillTooltipHeight = skillTooltipElem.clientHeight;
             const pageHeight = document.body.scrollHeight;
-            skillDescriptionElem.style.left = e.clientX + 10 + 'px';
-            skillDescriptionElem.style.top = Math.min(pageHeight - skillDescriptionHeight - 15, document.body.scrollTop + e.clientY + 10) + 'px';
+            skillTooltipElem.style.left = e.clientX + 10 + 'px';
+            skillTooltipElem.style.top = Math.min(pageHeight - skillTooltipHeight - 15, document.body.scrollTop + e.clientY + 10) + 'px';
         }
 
         /**
          * @param {MouseEvent} e
          * @private
          */
-        _hideSkillDescription (e) {
+        _hideSkillTooltip(e) {
             e.preventDefault();
 
-            const skillDescriptionElem = document.getElementById('mst-skill-description');
-            skillDescriptionElem.hidden = true;
+            const skillTooltipElem = document.getElementById('mst-skill-tooltip');
+            skillTooltipElem.hidden = true;
         }
     }
 

@@ -1,13 +1,11 @@
 .table-container {
     user-select: none;
-    z-index: 2;
 }
 
 .table-column-container {
     display: inline-block;
     padding: 5px;
     box-shadow: inset 0 0 100px 100px #f3ebeb;
-    z-index: 1;
 }
 
 .table-column-container.green {
@@ -51,6 +49,11 @@
     box-shadow: inset 0 0 10px #089, 0 0 5px #0ab;
 }
 
+.skill .icon {
+    position: relative;
+    z-index: 1;
+}
+
 .skill-level {
     display: inline-block;
     position: relative;
@@ -63,6 +66,7 @@
     background-color: #d0bcbc;
     text-align: center;
     float: left;
+    z-index: 2;
 }
 
 .skill-connector {
@@ -103,7 +107,7 @@
     z-index: 0;
 }
 
-.skill-description {
+.skill-tooltip {
     font-family: 'Arial', serif;
     user-select: none;
     position: absolute;
@@ -117,30 +121,31 @@
     text-align: center;
     line-height: 1.5;
     letter-spacing: -.03em;
+    z-index: 100;
 }
 
-.skill-description .title {
+.skill-tooltip .title {
     color: #e6b919;
 }
 
-.skill-description p {
+.skill-tooltip p {
     margin: 0;
 }
 
-.skill-description .next-level, .requirements {
+.skill-tooltip .next-level, .requirements {
     margin-top: 1em;
 }
 
-.skill-description .next-level:before {
+.skill-tooltip .next-level:before {
     color: #18f17a;
     content: 'Next Level:';
 }
 
-.skill-description .requirements:before {
+.skill-tooltip .requirements:before {
     color: #859ee2;
     content: 'Requirements:';
 }
 
-.skill-description .requirements .incomplete {
+.skill-tooltip .requirements .incomplete {
     color: #e42e17;
 }
