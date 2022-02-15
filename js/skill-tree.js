@@ -1,55 +1,7 @@
 import {Skills} from './skills.js';
+import {SkillTreeBranches, SkillTreeSchemas} from './skill-tree-schemas.js';
 
-/** @typedef {{name: string, dependency: string}} SkillTreeSchemaSkillWithDependency */
-/** @typedef {string|SkillTreeSchemaSkillWithDependency} SkillTreeSchemaSkill */
-/** @typedef {null|SkillTreeSchemaSkill} SkillTreeSchemaCell */
-/** @typedef {SkillTreeSchemaCell[]} SkillTreeSchemaRow */
-/** @typedef {{name: string, rows: SkillTreeSchemaRow[]}} SkillTreeSchemaBranch */
-/**
- * @typedef {{name: string, green: SkillTreeSchemaBranch, blue: SkillTreeSchemaBranch, red: SkillTreeSchemaBranch}} SkillTreeSchema
- */
-
-const MAX_TREE_LEVEL = 399;
-
-export const SkillsTreeBranches = Object.freeze({
-    green: 'green',
-    blue: 'blue',
-    red: 'red'
-});
-
-export const SkillsTreeSkillDependencies = Object.freeze({
-    vertical: 'vertical',
-    vertical_double: 'vertical double',
-    horizontal: 'horizontal',
-    double_left: 'double-left'
-});
-
-export const SkillsTreeClasses = {
-    DK: 'DK',
-    DW: 'DW',
-    ELF: 'ELF',
-    MG: 'MG',
-    DL: 'DL',
-    SUM: 'SUM',
-    GL: 'GL',
-    SLA: 'SLA',
-    GUN: 'GUN'
-};
-
-/**
- * @type {Object.<string, SkillTreeSchema>}
- */
-export const SkillsTreeSchemas = {
-    DK: null,
-    DW: null,
-    ELF: null,
-    MG: null,
-    DL: null,
-    SUM: null,
-    GL: null,
-    SLA: null,
-    GUN: null
-};
+export const MAX_TREE_LEVEL = 399;
 
 class SkillInstance {
     /** @type {string} */
@@ -74,19 +26,19 @@ class SkillInstance {
     }
 }
 
-export class SkillsTree {
+export class SkillTree {
     /** @type {SkillTreeSchema} */
     schema;
     /** @type {Object.<string, SkillInstance>} */
     skills;
 
     /**
-     * @param {string} skillsTreeClass
+     * @param {string} skillTreeClass
      */
-    init(skillsTreeClass) {
-        this.schema = SkillsTreeSchemas[skillsTreeClass];
+    init(skillTreeClass) {
+        this.schema = SkillTreeSchemas[skillTreeClass];
         this.skills = {};
-        for (const branchName in SkillsTreeBranches) {
+        for (const branchName in SkillTreeBranches) {
             for (let i = 0; i < this.schema[branchName].rows.length; i++) {
                 /** @type SkillTreeSchemaRow */
                 const row = this.schema[branchName].rows[i];

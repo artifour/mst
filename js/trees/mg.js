@@ -1,5 +1,5 @@
 import {Skill, Skills} from '../skills.js';
-import {SkillsTreeSchemas, SkillsTreeSkillDependencies} from '../skills-tree.js';
+import {SkillTreeClasses, SkillTreeSchemas, SkillTreeSkillDependencies} from '../skill-tree-schemas.js';
 
 Skills.MG_WingOfRuinDefensePowUp = new Skill(
     'Wing of Ruin Defense PowUp',
@@ -64,7 +64,7 @@ Skills.MG_GiganticStormStrengthener = new Skill(
 /**
  * @type SkillTreeSchema
  */
-const MGSkillsTreeSchema = {
+const MGSkillTreeSchema = {
     name: 'Duel Master',
     green: {
         name: 'Solidity',
@@ -84,16 +84,16 @@ const MGSkillsTreeSchema = {
             [
                 {
                     name: 'DurabilityReduction2',
-                    dependency: SkillsTreeSkillDependencies.vertical_double
+                    dependency: SkillTreeSkillDependencies.vertical_double
                 },
                 {
                     name: 'SDRecoverySpeedIncrease',
-                    dependency: SkillsTreeSkillDependencies.vertical
+                    dependency: SkillTreeSkillDependencies.vertical
                 },
                 null,
                 {
                     name: 'AutomaticHPRecoveryIncrease',
-                    dependency: SkillsTreeSkillDependencies.vertical
+                    dependency: SkillTreeSkillDependencies.vertical
                 }
             ],
             [
@@ -102,17 +102,17 @@ const MGSkillsTreeSchema = {
                 'ElementalDEFIncrease',
                 {
                     name: 'AutomaticAGRecoveryIncrease',
-                    dependency: SkillsTreeSkillDependencies.vertical
+                    dependency: SkillTreeSkillDependencies.vertical
                 }
             ],
             [
                 {
                     name: 'DurabilityReduction3',
-                    dependency: SkillsTreeSkillDependencies.vertical_double
+                    dependency: SkillTreeSkillDependencies.vertical_double
                 },
                 {
                     name: 'DefenseSuccessRateIncrease',
-                    dependency: SkillsTreeSkillDependencies.vertical
+                    dependency: SkillTreeSkillDependencies.vertical
                 },
                 null,
                 null
@@ -123,7 +123,7 @@ const MGSkillsTreeSchema = {
                 'ArmorSetBonusIncrease',
                 {
                     name: 'Vengeance',
-                    dependency: SkillsTreeSkillDependencies.horizontal
+                    dependency: SkillTreeSkillDependencies.horizontal
                 }
             ],
             [
@@ -142,12 +142,12 @@ const MGSkillsTreeSchema = {
                 null,
                 {
                     name: 'MG_WingOfRuinAttackPowUp',
-                    dependency: SkillsTreeSkillDependencies.vertical
+                    dependency: SkillTreeSkillDependencies.vertical
                 },
                 'SteelArmor',
                 {
                     name: 'ShieldBlock',
-                    dependency: SkillsTreeSkillDependencies.vertical
+                    dependency: SkillTreeSkillDependencies.vertical
                 }
             ]
         ]
@@ -171,23 +171,23 @@ const MGSkillsTreeSchema = {
                 'FlameStrengthener',
                 {
                     name: 'BlastStrengthener',
-                    dependency: SkillsTreeSkillDependencies.vertical
+                    dependency: SkillTreeSkillDependencies.vertical
                 },
                 null,
                 {
                     name: 'MG_WeaponMastery',
-                    dependency: SkillsTreeSkillDependencies.double_left
+                    dependency: SkillTreeSkillDependencies.double_left
                 }
             ],
             [
                 {
                     name: 'InfernoStrengthener',
-                    dependency: SkillsTreeSkillDependencies.vertical
+                    dependency: SkillTreeSkillDependencies.vertical
                 },
                 'EvilSpiritStrengthener',
                 {
                     name: 'MagicMastery',
-                    dependency: SkillsTreeSkillDependencies.horizontal
+                    dependency: SkillTreeSkillDependencies.horizontal
                 },
                 'MaximumHPIncrease'
             ],
@@ -197,7 +197,7 @@ const MGSkillsTreeSchema = {
                 'IceStrengthener',
                 {
                     name: 'MaximumManaIncrease',
-                    dependency: SkillsTreeSkillDependencies.vertical
+                    dependency: SkillTreeSkillDependencies.vertical
                 }
             ],
             [
@@ -206,14 +206,14 @@ const MGSkillsTreeSchema = {
                 null,
                 {
                     name: 'MaximumAGIncrease',
-                    dependency: SkillsTreeSkillDependencies.vertical
+                    dependency: SkillTreeSkillDependencies.vertical
                 }
             ],
             [
                 null,
                 {
                     name: 'MG_FireSlashMastery',
-                    dependency: SkillsTreeSkillDependencies.vertical_double
+                    dependency: SkillTreeSkillDependencies.vertical_double
                 },
                 'MG_GiganticStormStrengthener',
                 'MaxHPBoost'
@@ -228,11 +228,11 @@ const MGSkillsTreeSchema = {
                 null,
                 {
                     name: 'BloodStormStrengthener',
-                    dependency: SkillsTreeSkillDependencies.vertical
+                    dependency: SkillTreeSkillDependencies.vertical
                 },
                 {
                     name: 'EarthPrisonStrengthener',
-                    dependency: SkillsTreeSkillDependencies.vertical
+                    dependency: SkillTreeSkillDependencies.vertical
                 },
                 null
             ]
@@ -256,19 +256,19 @@ const MGSkillsTreeSchema = {
             [
                 {
                     name: 'TwoHandedSwordMastery',
-                    dependency: SkillsTreeSkillDependencies.vertical
+                    dependency: SkillTreeSkillDependencies.vertical
                 },
                 {
                     name: 'OneHandedSwordMastery',
-                    dependency: SkillsTreeSkillDependencies.vertical
+                    dependency: SkillTreeSkillDependencies.vertical
                 },
                 {
                     name: 'OneHandedStaffMastery',
-                    dependency: SkillsTreeSkillDependencies.vertical
+                    dependency: SkillTreeSkillDependencies.vertical
                 },
                 {
                     name: 'TwoHandedStaffMastery',
-                    dependency: SkillsTreeSkillDependencies.vertical
+                    dependency: SkillTreeSkillDependencies.vertical
                 }
             ],
             [
@@ -283,17 +283,17 @@ const MGSkillsTreeSchema = {
                 null,
                 {
                     name: 'MonsterAttackManaIncrement',
-                    dependency: SkillsTreeSkillDependencies.vertical
+                    dependency: SkillTreeSkillDependencies.vertical
                 }
             ],
             [
                 {
                     name: 'MaximumWizardryIncrease',
-                    dependency: SkillsTreeSkillDependencies.vertical
+                    dependency: SkillTreeSkillDependencies.vertical
                 },
                 {
                     name: 'MaximumAttackPowerIncrease',
-                    dependency: SkillsTreeSkillDependencies.vertical
+                    dependency: SkillTreeSkillDependencies.vertical
                 },
                 null,
                 'IncreasesCriticalDamageRate'
@@ -304,14 +304,14 @@ const MGSkillsTreeSchema = {
                 'AbsorbLife',
                 {
                     name: 'IncreasesExcellentDamageRate',
-                    dependency: SkillsTreeSkillDependencies.vertical
+                    dependency: SkillTreeSkillDependencies.vertical
                 }
             ],
             [
                 null,
                 {
                     name: 'RestoresAllSD',
-                    dependency: SkillsTreeSkillDependencies.vertical
+                    dependency: SkillTreeSkillDependencies.vertical
                 },
                 null,
                 'IncreasesChanceOfIgnoreDEF'
@@ -326,4 +326,4 @@ const MGSkillsTreeSchema = {
     }
 }
 
-SkillsTreeSchemas.MG = MGSkillsTreeSchema;
+SkillTreeSchemas.set(SkillTreeClasses.MG, MGSkillTreeSchema);
