@@ -175,8 +175,8 @@ class BitReader {
 
         let value = ((this.data[start] & (Math.pow(2,  leftBitsCount) - 1)) << rightBitsCount);
         let i = 1;
-        while (rightBitsCount > 8) {
-            rightBitsCount -= 8;
+        while (rightBitsCount > ARRAY_SIZE) {
+            rightBitsCount -= ARRAY_SIZE;
             value |= this.data[start + i++] << rightBitsCount;
         }
 
@@ -218,18 +218,18 @@ class BitWriter {
      * @param {number} bitsCount
      */
     write(value, bitsCount) {
-        const start = Math.trunc(this.position/ARRAY_SIZE);
-        const end = Math.trunc((this.position + bitsCount - 1)/ARRAY_SIZE);
-        const offset = this.position % ARRAY_SIZE;
+        const start = Math.trunc(this.position/8);
+        const end = Math.trunc((this.position + bitsCount - 1)/8);
+        const offset = this.position % 8;
 
         if (start === end) {
-            this.buffer |= (value << (ARRAY_SIZE - offset - bitsCount));
+            this.buffer |= (value << (8 - offset - bitsCount));
             this._incPosition(bitsCount);
 
             return;
         }
 
-        const leftBitsCount = ARRAY_SIZE - offset;
+        const leftBitsCount = 8 - offset;
         let rightBitsCount = bitsCount - leftBitsCount;
         this.buffer |= (value >>> rightBitsCount);
         this._writeBuffer();
@@ -240,7 +240,7 @@ class BitWriter {
             this._writeBuffer();
         }
 
-        this.buffer = (value & (Math.pow(2, rightBitsCount) - 1)) << (ARRAY_SIZE - rightBitsCount);
+        this.buffer = (value & (Math.pow(2, rightBitsCount) - 1)) << (8 - rightBitsCount);
         this._incPosition(bitsCount);
     }
 
@@ -248,7 +248,7 @@ class BitWriter {
      * @return {string}
      */
     getData() {
-        if (this.position % ARRAY_SIZE !== 0) {
+        if (this.position % 8 !== 0) {
             this._writeBuffer();
         }
 
@@ -262,7 +262,7 @@ class BitWriter {
     _incPosition(inc) {
         this.position += inc;
 
-        if (this.position % ARRAY_SIZE === 0) {
+        if (this.position % 8 === 0) {
             this._writeBuffer();
         }
     }

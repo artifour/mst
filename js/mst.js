@@ -278,11 +278,6 @@ const MST = (function () {
             let decrement = e.ctrlKey ? 20 : 1;
             const requiredPoints = this.skillTree.getSkillRequiredPoints(skillName);
             if ((currentSkillLevel - decrement) < requiredPoints) {
-                const pointsLeft = this.skillTree.getPointsLeft();
-                if (pointsLeft < requiredPoints) {
-                    return;
-                }
-
                 decrement += requiredPoints;
             }
 
