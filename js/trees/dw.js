@@ -1,81 +1,13 @@
-import {FORMULA_17, FORMULA_22, FORMULA_3, FORMULA_4, FORMULA_7, Skill, Skills} from '../skills.js';
+import {Skill, Skills} from '../skills.js';
 import {SkillTreeClasses, SkillTreeSchemas, SkillTreeSkillDependencies} from '../skill-tree-schemas.js';
-
-Skills.MG_WingOfRuinDefensePowUp = new Skill(
-    476,
-    'Wing of Ruin Defense PowUp',
-    'Defense increases by {value} while equipping the Wing of Ruin.',
-    'XXX-wing-red',
-    FORMULA_17, // TODO
-    20
-);
-Skills.MG_WingOfRuinAttackPowUp = new Skill(
-    478,
-    'Wing of Ruin Attack PowUp',
-    'Attack, Wizardry power increases by {value} while equipping the Wing of Ruin.',
-    'XXX-wing-green',
-    FORMULA_17, // TODO
-    20,
-    {MG_WingOfRuinDefensePowUp: 10}
-);
-Skills.MG_PowerSlashStrengthener = new Skill(
-    482,
-    'Power Slash Strengthener',
-    'Power Slash skill damage increases by {value}.',
-    'power-slash-strengthener',
-    FORMULA_17,
-    20
-);
-Skills.MG_WeaponMastery = new Skill(
-    335,
-    'Weapon Mastery',
-    'Attack power increases by {value}.',
-    'weapon-mastery',
-    FORMULA_22,
-    20,
-    {TwistingSlashStrengthener: 10, MG_PowerSlashStrengthener: 10}
-);
-Skills.MG_FireSlashStrengthener = new Skill(
-    490,
-    'Fire Slash Strengthener',
-    'Fire Slash damage increases by {value} and Skill range becomes 3',
-    'fire-slash-strengthener',
-    FORMULA_3,
-    20
-);
-Skills.MG_FireSlashMastery = new Skill(
-    493,
-    'Fire Slash Mastery',
-    'Fire Slash skill\'s defense reduction increases by {value,}%.',
-    'fire-slash-mastery',
-    FORMULA_7,
-    20,
-    {MG_FireSlashStrengthener: 10}
-);
-Skills.MG_FlameStrikeStrengthener = new Skill(
-    492,
-    'Flame Strike Strengthener',
-    'Flame Strike damage increases by {value}.',
-    'flame-strike-strengthener',
-    FORMULA_4,
-    20
-);
-Skills.MG_GiganticStormStrengthener = new Skill(
-    496,
-    'Gigantic Storm Strengthener',
-    'Gigantic Storm skill damage increases by {value}.',
-    'gigantic-storm-strengthener',
-    FORMULA_3,
-    20
-);
 
 /**
  * @type SkillTreeSchema
  */
-const MGSkillTreeSchema = {
-    name: 'Duel Master',
+const DWSkillTreeSchema = {
+    name: 'Soul Master',
     green: {
-        name: 'Solidity',
+        name: 'Peace',
         rows: [
             [
                 'DurabilityReduction1',
@@ -142,16 +74,17 @@ const MGSkillTreeSchema = {
             ],
             [
                 null,
-                'MG_WingOfRuinDefensePowUp',
-                'WeaponBlock',
+                null,
+                null,
                 'ProtectionShield'
             ],
             [
                 null,
-                {
-                    name: 'MG_WingOfRuinAttackPowUp',
-                    dependency: SkillTreeSkillDependencies.vertical
-                },
+                null,
+                // {
+                //     name: 'MG_WingOfRuinAttackPowUp',
+                //     dependency: SkillTreeSkillDependencies.vertical
+                // },
                 'SteelArmor',
                 {
                     name: 'ShieldBlock',
@@ -161,7 +94,7 @@ const MGSkillTreeSchema = {
         ]
     },
     blue: {
-        name: 'Fighting Spirit',
+        name: 'Wisdom',
         rows: [
             [
                 'AttackSuccessRateIncrease',
@@ -170,84 +103,79 @@ const MGSkillTreeSchema = {
                 null
             ],
             [
-                'CycloneStrengthener',
-                'LightningStrengthener',
-                'TwistingSlashStrengthener',
-                'MG_PowerSlashStrengthener'
-            ],
-            [
                 'FlameStrengthener',
-                {
-                    name: 'BlastStrengthener',
-                    dependency: SkillTreeSkillDependencies.vertical
-                },
+                'LightningStrengthener',
                 null,
-                {
-                    name: 'MG_WeaponMastery',
-                    dependency: SkillTreeSkillDependencies.double_left
-                }
+                null
             ],
             [
                 {
                     name: 'InfernoStrengthener',
                     dependency: SkillTreeSkillDependencies.vertical
                 },
+                {
+                    name: 'BlastStrengthener',
+                    dependency: SkillTreeSkillDependencies.vertical
+                },
+                null,
+                null
+            ],
+            [
                 'EvilSpiritStrengthener',
                 {
                     name: 'MagicMastery',
                     dependency: SkillTreeSkillDependencies.horizontal
                 },
-                'MaximumLifeIncrease'
+                'MaximumLifeIncrease',
+                null
             ],
             [
                 null,
-                'MG_FireSlashStrengthener',
-                'IceStrengthener',
+                null,
                 {
                     name: 'MaximumManaIncrease',
                     dependency: SkillTreeSkillDependencies.vertical
-                }
+                },
+                'IceStrengthener'
             ],
             [
-                'MG_FlameStrikeStrengthener',
                 null,
                 null,
                 {
                     name: 'MaximumAGIncrease',
                     dependency: SkillTreeSkillDependencies.vertical
-                }
-            ],
-            [
-                null,
-                {
-                    name: 'MG_FireSlashMastery',
-                    dependency: SkillTreeSkillDependencies.vertical_double
                 },
-                'MG_GiganticStormStrengthener',
-                'MaxHPBoost'
+                null
             ],
             [
                 null,
-                'BloodStorm',
+                null,
+                // {
+                //     name: 'MG_FireSlashMastery',
+                //     dependency: SkillTreeSkillDependencies.vertical_double
+                // },
+                'MaxHPBoost',
+                null
+            ],
+            [
+                null,
                 'EarthPrison',
+                null,
                 null
             ],
             [
                 null,
                 {
-                    name: 'BloodStormStrengthener',
-                    dependency: SkillTreeSkillDependencies.vertical
-                },
-                {
                     name: 'EarthPrisonStrengthener',
                     dependency: SkillTreeSkillDependencies.vertical
                 },
+                null,
                 null
             ]
         ]
     },
     red: {
-        name: 'Ultimatum',
+        name: 'Overcome',
         rows: [
             [
                 'AttackRate',
@@ -256,20 +184,12 @@ const MGSkillTreeSchema = {
                 null
             ],
             [
-                'TwoHandedSwordStrengthener',
-                'OneHandedSwordStrengthener',
                 'OneHandedStaffStrengthener',
-                'TwoHandedStaffStrengthener'
+                'TwoHandedStaffStrengthener',
+                null,
+                null
             ],
             [
-                {
-                    name: 'TwoHandedSwordMastery',
-                    dependency: SkillTreeSkillDependencies.vertical
-                },
-                {
-                    name: 'OneHandedSwordMastery',
-                    dependency: SkillTreeSkillDependencies.vertical
-                },
                 {
                     name: 'OneHandedStaffMastery',
                     dependency: SkillTreeSkillDependencies.vertical
@@ -277,7 +197,9 @@ const MGSkillTreeSchema = {
                 {
                     name: 'TwoHandedStaffMastery',
                     dependency: SkillTreeSkillDependencies.vertical
-                }
+                },
+                null,
+                null
             ],
             [
                 null,
@@ -286,8 +208,8 @@ const MGSkillTreeSchema = {
                 'MonsterAttackLifeIncrement'
             ],
             [
+                null,
                 'MinimumWizardryIncrease',
-                'MinimumAttackPowerIncrease',
                 null,
                 {
                     name: 'MonsterAttackManaIncrement',
@@ -295,12 +217,9 @@ const MGSkillTreeSchema = {
                 }
             ],
             [
+                null,
                 {
                     name: 'MaximumWizardryIncrease',
-                    dependency: SkillTreeSkillDependencies.vertical
-                },
-                {
-                    name: 'MaximumAttackPowerIncrease',
                     dependency: SkillTreeSkillDependencies.vertical
                 },
                 null,
@@ -334,4 +253,4 @@ const MGSkillTreeSchema = {
     }
 }
 
-SkillTreeSchemas.set(SkillTreeClasses.MG, MGSkillTreeSchema);
+SkillTreeSchemas.set(SkillTreeClasses.DW, DWSkillTreeSchema);

@@ -1,7 +1,9 @@
+import './trees/dw.js';
 import './trees/mg.js';
 import {SkillTreeBranches, SkillTreeClasses} from './skill-tree-schemas.js';
-import {MAX_TREE_LEVEL, SkillTree} from './skill-tree.js';
-import {SkillTooltip} from './mst-tooltip.js';
+import {SkillTree} from './skill-tree.js';
+import {SkillTooltip} from './mst-skill-tooltip.js';
+import {ClassSelection} from './mst-class-selection.js';
 
 const MST = (function () {
     class SkillTreeContainer {
@@ -14,21 +16,48 @@ const MST = (function () {
 
         /**
          * @param {HTMLElement} container
+         * @param {string} hash
          */
-        constructor(container) {
+        constructor(container, hash) {
             this.container = container;
             this.skillTree = new SkillTree();
             this.skillTooltip = new SkillTooltip(document.getElementById('mst-skill-tooltip'));
-            this.init();
+            this.init(hash);
         }
 
-        init() {
-            this.skillTree.init(SkillTreeClasses.MG);
+        /**
+         * @param {string} hash
+         */
+        init(hash) {
+            if (!hash || (hash.length < 1)) {
+                new ClassSelection(this.container, function (skillTreeClass) {
+                    this.skillTree.init({skillTreeClass: skillTreeClass});
+                    this._rebuildTree();
+                    this._buildHash();
+                }.bind(this));
 
+                return;
+            }
+
+            this.skillTree.init({hash: hash});
+            this._rebuildTree();
+            this._buildHash();
+        }
+
+        /**
+         * @private
+         */
+        _rebuildTree() {
             this.container.innerHTML = '';
+
+            const nameElem = this._createDiv('name');
+            nameElem.innerHTML = 'Class: ' + this.skillTree.getName();
+            this.container.appendChild(nameElem);
+
             const pointsElem = this._createDiv('points');
-            pointsElem.innerHTML = 'Points: ' + MAX_TREE_LEVEL;
+            pointsElem.innerHTML = 'Points: ' + this.skillTree.getPointsLeft();
             this.container.appendChild(pointsElem);
+
             this._initBranch(SkillTreeBranches.green);
             this._initBranch(SkillTreeBranches.blue);
             this._initBranch(SkillTreeBranches.red);
@@ -44,12 +73,17 @@ const MST = (function () {
 
             const branchTitleElem = this._createDiv('table-column-title');
             const branchTitle = this.skillTree.getBranchTitle(branchName);
-            branchTitleElem.innerHTML = `${branchTitle}: 0`;
+            const branchLevel = this.skillTree.getBranchLevel(branchName);
+            branchTitleElem.innerHTML = `${branchTitle}: ${branchLevel}`;
 
             branchElem.appendChild(branchTitleElem);
 
             for (let i = 0; i < 9; i++) {
                 const row = this.skillTree.getBranchRank(branchName, i);
+                if (!row) {
+                    break;
+                }
+
                 const rowElem = this._createBranchRow(row);
                 branchElem.appendChild(rowElem);
             }
@@ -91,7 +125,10 @@ const MST = (function () {
             const skillName = typeof skill === 'object' ? skill.name : skill;
 
             const skillElem = this._createDiv('skill');
-            skillElem.classList.add('disabled');
+            if (!this.skillTree.isSkillLevelAccessible(skillName)) {
+                skillElem.classList.add('disabled');
+            }
+
             skillElem.onclick = this._increaseSkillLevel.bind(this);
             skillElem.oncontextmenu = this._decreaseSkillLevel.bind(this);
             skillElem.onmouseenter = this._showSkillTooltip.bind(this);
@@ -110,7 +147,7 @@ const MST = (function () {
             skillElem.appendChild(iconElem);
 
             const skillLevelElem = this._createDiv('skill-level');
-            skillLevelElem.innerHTML = '0';
+            skillLevelElem.innerHTML = this.skillTree.getSkillLevel(skillName);
             skillElem.appendChild(skillLevelElem);
 
             return skillElem;
@@ -173,11 +210,24 @@ const MST = (function () {
                 return;
             }
 
+            let increment = e.ctrlKey ? 10 : 1;
             const currentSkillLevel = this.skillTree.getSkillLevel(skillName);
-            const skillLevel = this.skillTree.increaseSkillLevel(skillName, e.ctrlKey ? 10 : 1);
+            const requiredPoints = this.skillTree.getSkillRequiredPoints(skillName);
+            if ((currentSkillLevel === 0) && (requiredPoints > 1)) {
+                const pointsLeft = this.skillTree.getPointsLeft();
+                if (pointsLeft < requiredPoints) {
+                    return;
+                }
+
+                increment = Math.max(increment, requiredPoints);
+            }
+
+            const skillLevel = this.skillTree.increaseSkillLevel(skillName, increment);
             if (skillLevel === currentSkillLevel) {
                 return;
             }
+
+            this._buildHash();
 
             const branchName = this.skillTree.getSkillBranchName(skillName);
 
@@ -225,10 +275,23 @@ const MST = (function () {
                 return;
             }
 
-            const skillLevel = this.skillTree.decreaseSkillLevel(skillName, e.ctrlKey ? 20 : 1);
+            let decrement = e.ctrlKey ? 20 : 1;
+            const requiredPoints = this.skillTree.getSkillRequiredPoints(skillName);
+            if ((currentSkillLevel - decrement) < requiredPoints) {
+                const pointsLeft = this.skillTree.getPointsLeft();
+                if (pointsLeft < requiredPoints) {
+                    return;
+                }
+
+                decrement += requiredPoints;
+            }
+
+            const skillLevel = this.skillTree.decreaseSkillLevel(skillName, decrement);
             if (skillLevel === currentSkillLevel) {
                 return;
             }
+
+            this._buildHash();
 
             const branchName = this.skillTree.getSkillBranchName(skillName);
 
@@ -276,7 +339,7 @@ const MST = (function () {
          */
         _updateTreeLevel() {
             const pointsElem = this.container.querySelector('.points');
-            pointsElem.innerHTML = 'Points: ' + (MAX_TREE_LEVEL - this.skillTree.getTreeLevel());
+            pointsElem.innerHTML = 'Points: ' + this.skillTree.getPointsLeft();
         }
 
         /**
@@ -312,10 +375,18 @@ const MST = (function () {
 
             this.skillTooltip.hide();
         }
+
+        /**
+         * @private
+         */
+        _buildHash() {
+            location.hash = this.skillTree.getHash();
+        }
     }
 
     const container = document.getElementById('master-skill-tree');
-    const skillTreeContainer = new SkillTreeContainer(container);
+    const hash = location.hash.slice(1);
+    const skillTreeContainer = new SkillTreeContainer(container, hash);
 
     return skillTreeContainer.skillTree;
 })();

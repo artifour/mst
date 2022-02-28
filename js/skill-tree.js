@@ -1,5 +1,6 @@
 import {Skills} from './skills.js';
-import {SkillTreeBranches, SkillTreeSchemas} from './skill-tree-schemas.js';
+import {SkillTreeBranches, SkillTreeClasses, SkillTreeSchemas} from './skill-tree-schemas.js';
+import {SkillTreeHashDecoder, SkillTreeHashEncoder} from './skill-tree-hash.js';
 
 export const MAX_TREE_LEVEL = 399;
 
@@ -27,16 +28,28 @@ class SkillInstance {
 }
 
 export class SkillTree {
+    /** @type string */
+    skillTreeClass;
     /** @type {SkillTreeSchema} */
     schema;
     /** @type {Object.<string, SkillInstance>} */
     skills;
 
     /**
-     * @param {string} skillTreeClass
+     * @param {{skillTreeClass: ?string, hash: ?string}} args
      */
-    init(skillTreeClass) {
-        this.schema = SkillTreeSchemas[skillTreeClass];
+    init(args) {
+        if (args.hasOwnProperty('skillTreeClass')) {
+            this.skillTreeClass = args.skillTreeClass;
+        }
+
+        let skillTreeHashDecoder = null;
+        if (args.hasOwnProperty('hash')) {
+            skillTreeHashDecoder = new SkillTreeHashDecoder(args.hash);
+            this.skillTreeClass = skillTreeHashDecoder.getSkillTreeClass();
+        }
+
+        this.schema = SkillTreeSchemas[this.skillTreeClass];
         this.skills = {};
         for (const branchName in SkillTreeBranches) {
             for (let i = 0; i < this.schema[branchName].rows.length; i++) {
@@ -48,16 +61,61 @@ export class SkillTree {
                     }
 
                     const skillName = (typeof row[j] === 'object') ? row[j].name : row[j];
+                    if (!Skills.hasOwnProperty(skillName)) {
+                        throw Error(`Skill ${skillName} not found`);
+                    }
 
                     const requirementSkillLevels = Skills[skillName].getRequirements();
                     for (const requirementSkillName in requirementSkillLevels) {
+                        if (!Skills.hasOwnProperty(requirementSkillName)) {
+                            throw Error(`Skill ${requirementSkillName} not found`);
+                        }
+
+                        if (!this.skills.hasOwnProperty(requirementSkillName)) {
+                            throw Error(`Skill ${requirementSkillName} order error`);
+                        }
+
                         this.skills[requirementSkillName].dependentSkillNames.push(skillName);
                     }
 
-                    this.skills[skillName] = new SkillInstance(branchName, i + 1, 0);
+                    if (skillTreeHashDecoder) {
+                        this.skills[skillName] = new SkillInstance(
+                            branchName,
+                            i + 1,
+                            skillTreeHashDecoder.getSkillLevel(skillName)
+                        );
+                    } else {
+                        this.skills[skillName] = new SkillInstance(branchName, i + 1, 0);
+                    }
                 }
             }
         }
+    }
+
+    /**
+     * @return {string}
+     */
+    getSkillTreeClass() {
+        return this.skillTreeClass;
+    }
+
+    /**
+     * @return {string}
+     */
+    getName() {
+        return this.schema.name;
+    }
+
+    /**
+     * @return {string}
+     */
+    getHash() {
+        const skillTreeHashEncoder = new SkillTreeHashEncoder(this.skillTreeClass);
+        for (const skillName in this.skills) {
+            skillTreeHashEncoder.addSkill(skillName, this.skills[skillName].level);
+        }
+
+        return skillTreeHashEncoder.encode();
     }
 
     /**
@@ -70,6 +128,13 @@ export class SkillTree {
         }
 
         return level;
+    }
+
+    /**
+     * @return {number}
+     */
+    getPointsLeft() {
+        return MAX_TREE_LEVEL - this.getTreeLevel();
     }
 
     /**
@@ -270,6 +335,14 @@ export class SkillTree {
      */
     getSkillDependentSkillNames(skillName) {
         return this.skills[skillName].dependentSkillNames;
+    }
+
+    /**
+     * @param {string} skillName
+     * @return {number}
+     */
+    getSkillRequiredPoints(skillName) {
+        return Skills[skillName].getRequiredPoints();
     }
 
     /**

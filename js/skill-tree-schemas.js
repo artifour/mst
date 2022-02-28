@@ -20,17 +20,26 @@ export const SkillTreeSkillDependencies = Object.freeze({
     double_left: 'double-left'
 });
 
-export const SkillTreeClasses = {
+export const SkillTreeClasses = Object.freeze({
     DK: 'DK',
     DW: 'DW',
     ELF: 'ELF',
     MG: 'MG',
     DL: 'DL',
     SUM: 'SUM',
+    RF: 'RF',
     GL: 'GL',
-    SLA: 'SLA',
-    GUN: 'GUN'
-};
+    RW: 'RW',
+    SL: 'SL',
+    GC: 'GC',
+
+    /**
+     * @return {string[]}
+     */
+    getAll: function () {
+        return [this.DK, this.DW, this.ELF, this.MG, this.DL, this.SUM, this.RF, this.GL, this.RW, this.SL, this.GC];
+    },
+});
 
 /**
  * @type {Object.<string, SkillTreeSchema>}
@@ -42,22 +51,25 @@ export const SkillTreeSchemas = {
     MG: null,
     DL: null,
     SUM: null,
+    RF: null,
     GL: null,
-    SLA: null,
-    GUN: null,
+    RW: null,
+    SL: null,
+    GC: null,
 
     /**
      * @param {string} skillTreeClass
      * @param {SkillTreeSchema} skillTreeSchema
      */
     set: function (skillTreeClass, skillTreeSchema) {
+        console.log(`${skillTreeClass} skill tree loaded.`);
         this[skillTreeClass] = skillTreeSchema;
     },
 
     /**
-     * @param {string} skillName
+     * @return {string[]}
      */
-    getSkillCode: function (skillName) {
-
+    getAvailableSkillTreeClasses: function () {
+        return SkillTreeClasses.getAll().filter(skillTreeClass => SkillTreeSchemas[skillTreeClass]);
     }
 };

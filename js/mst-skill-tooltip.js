@@ -29,7 +29,7 @@ export class SkillTooltip {
         skillTooltipTitleElem.innerHTML = skillTree.getSkillTitle(skillName);
         skillTooltipLevelElem.innerHTML =
             `Rank ${rank}, Skill Level: ${skillLevel}/${skillMaxLevel}`;
-        skillTooltipDescriptionElem.innerHTML = skillTree.getSkillDescription(skillName);
+        skillTooltipDescriptionElem.innerHTML = skillTree.getSkillDescription(skillName).replace(/\n/g, '<br>');
 
         if ((skillLevel > 0) && (skillLevel < skillMaxLevel)) {
             skillTooltipNextLevelElem.hidden = false;
@@ -82,8 +82,9 @@ export class SkillTooltip {
     _fillSkillTooltipRequirements(skillTree, skillTooltipRequirementsElem, skillName, rank) {
         skillTooltipRequirementsElem.innerHTML = '';
 
+        const skillRequiredPoints = skillTree.getSkillRequiredPoints(skillName);
         // всегда красный
-        const requiredPointsElem = this._createParagraph('Required Points: 1');
+        const requiredPointsElem = this._createParagraph(`Required Points: ${skillRequiredPoints}`);
         requiredPointsElem.classList.add('incomplete');
         skillTooltipRequirementsElem.appendChild(requiredPointsElem);
 

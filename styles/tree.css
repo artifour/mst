@@ -149,3 +149,58 @@
 .skill-tooltip .requirements .incomplete {
     color: #e42e17;
 }
+
+.class {
+    width: 160px;
+    height: 203px;
+    float: left;
+    margin: 2px;
+}
+
+.class:hover {
+    box-shadow: inset 0 0 10px #089, 0 0 5px #0ab;
+}
+
+.class.dk {
+    background: url(https://muxlegend.com/images/class/dk.png);
+}
+
+.class.dw {
+    background: url(https://muxlegend.com/images/class/dw.png);
+}
+
+.class.elf {
+    background: url(https://muxlegend.com/images/class/elf.png);
+}
+
+.class.mg {
+    background: url(https://muxlegend.com/images/class/mg.png);
+}
+
+.class.dl {
+    background: url(https://muxlegend.com/images/class/dl.png);
+}
+
+.class.sum {
+    background: url(https://muxlegend.com/images/class/sum.png);
+}
+
+.class.rf {
+    background: url(https://muxlegend.com/images/class/rf.png);
+}
+
+.class.gl {
+    background: url(https://muxlegend.com/images/class/gl.png);
+}
+
+.class.rw {
+    background: url(https://muxlegend.com/images/class/rw.png);
+}
+
+.class.sl {
+    background: url(https://muxlegend.com/images/class/sl.png);
+}
+
+.class.gc {
+    background: url(https://muxlegend.com/images/class/gc.png);
+}
