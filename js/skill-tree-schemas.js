@@ -32,12 +32,15 @@ export const SkillTreeClasses = Object.freeze({
     RW: 'RW',
     SL: 'SL',
     GC: 'GC',
+    WM: 'WM',
+    LM: 'LM',
 
     /**
      * @return {string[]}
      */
     getAll: function () {
-        return [this.DK, this.DW, this.ELF, this.MG, this.DL, this.SUM, this.RF, this.GL, this.RW, this.SL, this.GC];
+        return [this.DK, this.DW, this.ELF, this.MG, this.DL, this.SUM, this.RF, this.GL, this.RW, this.SL, this.GC,
+            this.WM, this.LM];
     },
 });
 
@@ -56,6 +59,8 @@ export const SkillTreeSchemas = {
     RW: null,
     SL: null,
     GC: null,
+    WM: null,
+    LM: null,
 
     /**
      * @param {string} skillTreeClass
