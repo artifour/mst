@@ -19,7 +19,7 @@ export class Skill {
      * @param {Requirements|null} requires
      * @param {number} requiredPoints
      */
-    constructor(id, title, description, icons, values, maxLevel, requires = null, requiredPoints = 1) {
+    constructor(id, title, description, icons, values, maxLevel = 20, requires = null, requiredPoints = 1) {
         this.id = id;
         this.title = title;
         this.description = description;
