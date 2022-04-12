@@ -36,7 +36,7 @@ export class SkillTreeHashEncoder {
         writer.write(SkillTreeClasses.getAll().indexOf(this.skillTreeClass), 4);
 
         for (const id in this.skills) {
-            writer.write(id, 12);
+            writer.write(id, 10);
             writer.write(this.skills[id], 5);
         }
 
@@ -84,10 +84,10 @@ class BaseSkillTreeHashVersionDecoder {
 
         const reader = new BitReader(data);
         reader.seek(8);
-        let id = reader.read(12);
+        let id = reader.read(10);
         while (id > 0) {
             this.skills[id] = reader.read(5);
-            id = reader.read(12);
+            id = reader.read(10);
         }
     }
 
