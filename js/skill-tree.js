@@ -36,7 +36,7 @@ export class SkillTree {
     skills;
 
     /**
-     * @param {{skillTreeClass: ?string, hash: ?string}} args
+     * @param {{skillTreeClass?: string, hash?: string}} args
      */
     init(args) {
         if (args.hasOwnProperty('skillTreeClass')) {

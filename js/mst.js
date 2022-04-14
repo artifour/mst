@@ -1,11 +1,10 @@
-import './trees/dw.js';
-import './trees/mg.js';
-import {SkillTreeBranches, SkillTreeClasses} from './skill-tree-schemas.js';
+import './trees/config.js';
+import {SkillTreeBranches} from './skill-tree-schemas.js';
 import {SkillTree} from './skill-tree.js';
 import {SkillTooltip} from './mst-skill-tooltip.js';
 import {ClassSelection} from './mst-class-selection.js';
 
-const MST = (function () {
+(function () {
     class SkillTreeContainer {
         /** @type HTMLDivElement */
         container;
@@ -381,8 +380,5 @@ const MST = (function () {
 
     const container = document.getElementById('master-skill-tree');
     const hash = location.hash.slice(1);
-    const skillTreeContainer = new SkillTreeContainer(container, hash);
-
-    return skillTreeContainer.skillTree;
+    new SkillTreeContainer(container, hash);
 })();
-

@@ -63,11 +63,11 @@ export class SkillTooltip {
      */
     setPosition(x, y) {
         const skillTooltipHeight = this.container.clientHeight;
-        const pageHeight = document.body.scrollHeight;
+        const pageBottom = window.scrollY + window.innerHeight;
         this.container.style.left = x + 10 + 'px';
         this.container.style.top = Math.min(
-            pageHeight - skillTooltipHeight - 15,
-            document.body.scrollTop + y + 10
+            pageBottom - skillTooltipHeight - 15,
+            window.scrollY + y + 10
         ) + 'px';
         this.container.hidden = false;
     }

@@ -1,4 +1,4 @@
-import {ClassSkill, FORMULA_17, FORMULA_22, FORMULA_3, FORMULA_4, FORMULA_7,  Skills} from '../skills.js';
+import {ClassSkill, FORMULA_17, FORMULA_22, FORMULA_283, FORMULA_3, FORMULA_4, FORMULA_7, Skills} from '../skills.js';
 import {SkillTreeClasses, SkillTreeSchemas, SkillTreeSkillDependencies} from '../skill-tree-schemas.js';
 
 Skills.MG_WingOfRuinDefensePowUp = new ClassSkill(
@@ -33,7 +33,7 @@ Skills.MG_WeaponMastery = new ClassSkill(
     'weapon-mastery',
     FORMULA_22,
     20,
-    {TwistingSlashStrengthener: 10, MG_PowerSlashStrengthener: 10}
+    {MG_PowerSlashStrengthener: 10}
 );
 Skills.MG_FireSlashStrengthener = new ClassSkill(
     490,
@@ -67,6 +67,54 @@ Skills.MG_GiganticStormStrengthener = new ClassSkill(
     'gigantic-storm-strengthener',
     FORMULA_3,
     20
+);
+Skills.MG_SpiralChargeStrengthener = new ClassSkill(
+    900,
+    'Spiral Charge Strengthener',
+    'The damage caused by using the two-handed sword\n skill tree times increases by {value}.',
+    'spiral-charge-strengthener',
+    FORMULA_3
+);
+Skills.MG_SpiralChargeMastery = new ClassSkill(
+    901,
+    'Spiral Charge Mastery',
+    'Added {value} sword explosion damage that occurs when y\nou use two-handed sword skills tree times.',
+    'spiral-charge-mastery',
+    FORMULA_283,
+    20,
+    {MG_SpiralChargeStrengthener: 10}
+);
+Skills.MG_CrusherChargeStrengthener = new ClassSkill(
+    902,
+    'Crusher Charge Strengthener',
+    'Increases the damage caused by explosion of sw\nords when using a one-handed sword skill tree time\ns by {value}.',
+    'crusher-charge-strengthener',
+    FORMULA_3
+);
+Skills.MG_CrusherChargeMastery = new ClassSkill(
+    903,
+    'Crusher Charge Mastery',
+    '{value} additional sword damage that occurs when you use\na one-handed sword skill tree times.',
+    'crusher-charge-mastery',
+    FORMULA_283,
+    20,
+    {MG_CrusherChargeStrengthener: 10}
+);
+Skills.MG_ElementalChargeStrengthener = new ClassSkill(
+    904,
+    'Elemental Charge Strengthener',
+    'Increases the damage caused by explosion of sw\nords when using a one-handed sword skill tree time\ns by {value}.',
+    'elemental-charge-strengthener',
+    FORMULA_3
+);
+Skills.MG_ElementalChargeMastery = new ClassSkill(
+    905,
+    'Elemental Charge Mastery',
+    '{value} additional sword damage that occurs when you use\na one-handed sword skill tree times.',
+    'elemental-charge-mastery',
+    FORMULA_283,
+    20,
+    {MG_ElementalChargeStrengthener: 10}
 );
 
 /**
@@ -184,14 +232,11 @@ const MGSkillTreeSchema = {
                 null,
                 {
                     name: 'MG_WeaponMastery',
-                    dependency: SkillTreeSkillDependencies.double_left
+                    dependency: SkillTreeSkillDependencies.vertical
                 }
             ],
             [
-                {
-                    name: 'InfernoStrengthener',
-                    dependency: SkillTreeSkillDependencies.vertical
-                },
+                'MG_FireSlashStrengthener',
                 'EvilSpiritStrengthener',
                 {
                     name: 'MagicMastery',
@@ -200,30 +245,39 @@ const MGSkillTreeSchema = {
                 'MaximumLifeIncrease'
             ],
             [
+                {
+                    name: 'MG_FireSlashMastery',
+                    dependency: SkillTreeSkillDependencies.vertical
+                },
                 null,
-                'MG_FireSlashStrengthener',
-                'IceStrengthener',
+                'MG_GiganticStormStrengthener',
                 {
                     name: 'MaximumManaIncrease',
                     dependency: SkillTreeSkillDependencies.vertical
                 }
             ],
             [
-                'MG_FlameStrikeStrengthener',
-                null,
-                null,
+                'MG_SpiralChargeStrengthener',
+                'MG_CrusherChargeStrengthener',
+                'MG_ElementalChargeStrengthener',
                 {
                     name: 'MaximumAGIncrease',
                     dependency: SkillTreeSkillDependencies.vertical
                 }
             ],
             [
-                null,
                 {
-                    name: 'MG_FireSlashMastery',
-                    dependency: SkillTreeSkillDependencies.vertical_double
+                    name: 'MG_SpiralChargeMastery',
+                    dependency: SkillTreeSkillDependencies.vertical
                 },
-                'MG_GiganticStormStrengthener',
+                {
+                    name: 'MG_CrusherChargeMastery',
+                    dependency: SkillTreeSkillDependencies.vertical
+                },
+                {
+                    name: 'MG_ElementalChargeMastery',
+                    dependency: SkillTreeSkillDependencies.vertical
+                },
                 'MaxHPBoost'
             ],
             [
@@ -308,7 +362,7 @@ const MGSkillTreeSchema = {
             ],
             [
                 'RestoresAllMana',
-                'RestoresAllHP',
+                null,
                 'AbsorbLife',
                 {
                     name: 'IncreasesExcellentDamageRate',
@@ -317,16 +371,16 @@ const MGSkillTreeSchema = {
             ],
             [
                 null,
+                'RestoresAllHP',
+                null,
+                null
+            ],
+            [
+                null,
                 {
                     name: 'RestoresAllSD',
                     dependency: SkillTreeSkillDependencies.vertical
                 },
-                null,
-                'IncreasesChanceOfIgnoreDEF'
-            ],
-            [
-                null,
-                null,
                 null,
                 null
             ]

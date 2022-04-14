@@ -365,6 +365,36 @@
     background-position-y: calc(var(--icon-scale) * -364px);
 }
 
+.icon.spiral-charge-strengthener {
+    background-position-x: calc(var(--icon-scale) * -260px);
+    background-position-y: calc(var(--icon-scale) * -392px);
+}
+
+.icon.spiral-charge-mastery {
+    background-position-x: calc(var(--icon-scale) * -280px);
+    background-position-y: calc(var(--icon-scale) * -392px);
+}
+
+.icon.crusher-charge-strengthener {
+    background-position-x: calc(var(--icon-scale) * -300px);
+    background-position-y: calc(var(--icon-scale) * -392px);
+}
+
+.icon.crusher-charge-mastery {
+    background-position-x: calc(var(--icon-scale) * -320px);
+    background-position-y: calc(var(--icon-scale) * -392px);
+}
+
+.icon.elemental-charge-strengthener {
+    background-position-x: calc(var(--icon-scale) * -340px);
+    background-position-y: calc(var(--icon-scale) * -392px);
+}
+
+.icon.elemental-charge-mastery {
+    background-position-x: calc(var(--icon-scale) * -360px);
+    background-position-y: calc(var(--icon-scale) * -392px);
+}
+
 .icon.max-hp-boost {
     background-position-x: calc(var(--icon-scale) * -360px);
     background-position-y: calc(var(--icon-scale) * -476px);

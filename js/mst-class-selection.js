@@ -16,7 +16,7 @@ export class ClassSelection {
         const skillTreeClasses = SkillTreeSchemas.getAvailableSkillTreeClasses();
         for (let i = 0; i < skillTreeClasses.length; i++) {
             const classCard = this._createDiv('class');
-            classCard.classList.add(skillTreeClasses[i]);
+            classCard.classList.add(skillTreeClasses[i].toLowerCase());
             classCard.onclick = () => this.callback(skillTreeClasses[i]);
 
             this.container.appendChild(classCard);
