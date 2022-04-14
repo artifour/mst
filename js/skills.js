@@ -8,9 +8,52 @@
  * @typedef {Object.<string, number>} Requirements
  */
 
-export class Skill {
+let internalSkillId = 1;
+
+class EmptySkill {
     /**
-     * @param {number} id
+     * @return {number}
+     * @private
+     */
+    static _generateId() {
+        return internalSkillId++;
+    }
+
+    /** @type number internal ID */
+    id;
+
+    constructor() {
+        this.id = EmptySkill._generateId();
+    }
+
+    /**
+     * @return {number}
+     */
+    getId() {
+        return this.id;
+    }
+}
+
+export class Skill extends EmptySkill {
+    /** @type number MU skill ID */
+    skillId;
+    /** @type string */
+    title;
+    /** @type string|LevelCallback */
+    description;
+    /** @type string|LevelCallback icon name (icons.css) */
+    icons;
+    /** @type {string|Object.<number, number>|LevelCallback} */
+    values;
+    /** @type number */
+    maxLevel;
+    /** @type Requirements|null dependent on skills */
+    requires;
+    /** @type number minimum amount of points to learn the skill */
+    requiredPoints;
+
+    /**
+     * @param {number} skillId
      * @param {string} title
      * @param {string|LevelCallback} description
      * @param {string|LevelCallback} icons
@@ -19,8 +62,10 @@ export class Skill {
      * @param {Requirements|null} requires
      * @param {number} requiredPoints
      */
-    constructor(id, title, description, icons, values, maxLevel, requires = null, requiredPoints = 1) {
-        this.id = id;
+    constructor(skillId, title, description, icons, values, maxLevel, requires = null, requiredPoints = 1) {
+        super();
+
+        this.skillId = skillId;
         this.title = title;
         this.description = description;
         this.icons = icons;
@@ -121,6 +166,9 @@ export class Skill {
 
         return data[keys[0]];
     }
+}
+
+export class ClassSkill extends Skill {
 }
 
 const F = 1;

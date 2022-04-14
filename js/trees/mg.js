@@ -1,7 +1,7 @@
-import {FORMULA_17, FORMULA_22, FORMULA_3, FORMULA_4, FORMULA_7, Skill, Skills} from '../skills.js';
+import {ClassSkill, FORMULA_17, FORMULA_22, FORMULA_3, FORMULA_4, FORMULA_7,  Skills} from '../skills.js';
 import {SkillTreeClasses, SkillTreeSchemas, SkillTreeSkillDependencies} from '../skill-tree-schemas.js';
 
-Skills.MG_WingOfRuinDefensePowUp = new Skill(
+Skills.MG_WingOfRuinDefensePowUp = new ClassSkill(
     476,
     'Wing of Ruin Defense PowUp',
     'Defense increases by {value} while equipping the Wing of Ruin.',
@@ -9,7 +9,7 @@ Skills.MG_WingOfRuinDefensePowUp = new Skill(
     FORMULA_17, // TODO
     20
 );
-Skills.MG_WingOfRuinAttackPowUp = new Skill(
+Skills.MG_WingOfRuinAttackPowUp = new ClassSkill(
     478,
     'Wing of Ruin Attack PowUp',
     'Attack, Wizardry power increases by {value} while equipping the Wing of Ruin.',
@@ -18,7 +18,7 @@ Skills.MG_WingOfRuinAttackPowUp = new Skill(
     20,
     {MG_WingOfRuinDefensePowUp: 10}
 );
-Skills.MG_PowerSlashStrengthener = new Skill(
+Skills.MG_PowerSlashStrengthener = new ClassSkill(
     482,
     'Power Slash Strengthener',
     'Power Slash skill damage increases by {value}.',
@@ -26,7 +26,7 @@ Skills.MG_PowerSlashStrengthener = new Skill(
     FORMULA_17,
     20
 );
-Skills.MG_WeaponMastery = new Skill(
+Skills.MG_WeaponMastery = new ClassSkill(
     335,
     'Weapon Mastery',
     'Attack power increases by {value}.',
@@ -35,7 +35,7 @@ Skills.MG_WeaponMastery = new Skill(
     20,
     {TwistingSlashStrengthener: 10, MG_PowerSlashStrengthener: 10}
 );
-Skills.MG_FireSlashStrengthener = new Skill(
+Skills.MG_FireSlashStrengthener = new ClassSkill(
     490,
     'Fire Slash Strengthener',
     'Fire Slash damage increases by {value} and Skill range becomes 3',
@@ -43,7 +43,7 @@ Skills.MG_FireSlashStrengthener = new Skill(
     FORMULA_3,
     20
 );
-Skills.MG_FireSlashMastery = new Skill(
+Skills.MG_FireSlashMastery = new ClassSkill(
     493,
     'Fire Slash Mastery',
     'Fire Slash skill\'s defense reduction increases by {value,}%.',
@@ -52,7 +52,7 @@ Skills.MG_FireSlashMastery = new Skill(
     20,
     {MG_FireSlashStrengthener: 10}
 );
-Skills.MG_FlameStrikeStrengthener = new Skill(
+Skills.MG_FlameStrikeStrengthener = new ClassSkill(
     492,
     'Flame Strike Strengthener',
     'Flame Strike damage increases by {value}.',
@@ -60,7 +60,7 @@ Skills.MG_FlameStrikeStrengthener = new Skill(
     FORMULA_4,
     20
 );
-Skills.MG_GiganticStormStrengthener = new Skill(
+Skills.MG_GiganticStormStrengthener = new ClassSkill(
     496,
     'Gigantic Storm Strengthener',
     'Gigantic Storm skill damage increases by {value}.',

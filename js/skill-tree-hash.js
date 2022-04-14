@@ -6,6 +6,7 @@ const VERSION = 1;
 export class SkillTreeHashEncoder {
     /** @type string */
     skillTreeClass;
+    /** @type {Object.<number, number>} */
     skills;
 
     /**
@@ -21,7 +22,7 @@ export class SkillTreeHashEncoder {
      * @param {number} skillLevel
      */
     addSkill(skillName, skillLevel) {
-        const id = Skills[skillName].id;
+        const id = Skills[skillName].getId();
         if (skillLevel < 1) {
             delete this.skills[id];
             return;
@@ -30,14 +31,21 @@ export class SkillTreeHashEncoder {
         this.skills[id] = skillLevel;
     }
 
+    /**
+     * @return {string}
+     */
     encode() {
         const writer = new BitWriter();
         writer.write(VERSION, 4);
         writer.write(SkillTreeClasses.getAll().indexOf(this.skillTreeClass), 4);
 
         for (const id in this.skills) {
-            writer.write(id, 12);
-            writer.write(this.skills[id], 5);
+            writer.write(id, 10);
+            if (this.skills[id] === 10) {
+                writer.write(1, 1);
+            } else {
+                writer.write(this.skills[id], 6);
+            }
         }
 
         return btoa(writer.getData());
@@ -45,8 +53,8 @@ export class SkillTreeHashEncoder {
 }
 
 export class SkillTreeHashDecoder {
-    /** @type BaseSkillTreeHashVersionDecoder */
-    versionDecoder;
+    /** @type BaseSkillTreeVersionReader */
+    skillTreeVersionReader;
 
     /**
      * @param {string} hash
@@ -54,14 +62,14 @@ export class SkillTreeHashDecoder {
     constructor(hash) {
         const data = atob(hash);
 
-        this.versionDecoder = (new SkillTreeHashVersionDecoderFactory()).create(data);
+        this.skillTreeVersionReader = (new SkillTreeHashVersionReaderFactory()).create(data);
     }
 
     /**
      * @return {string}
      */
     getSkillTreeClass() {
-        return this.versionDecoder.getSkillTreeClass();
+        return this.skillTreeVersionReader.getSkillTreeClass();
     }
 
     /**
@@ -69,71 +77,116 @@ export class SkillTreeHashDecoder {
      * @return {number}
      */
     getSkillLevel(skillName) {
-        return this.versionDecoder.getSkillLevel(skillName);
+        return this.skillTreeVersionReader.getSkillLevel(skillName);
     }
 }
 
-class BaseSkillTreeHashVersionDecoder {
+class BaseSkillTreeVersionReader {
     /** @type string */
-    data;
+    skillTreeClass;
+    /** @type {Object.<number, number>} */
     skills;
 
-    constructor(data) {
-        this.data = data;
+    /**
+     * @param {BitReader} reader
+     */
+    constructor(reader) {
         this.skills = {};
 
-        const reader = new BitReader(data);
-        reader.seek(8);
-        let id = reader.read(12);
-        while (id > 0) {
-            this.skills[id] = reader.read(5);
-            id = reader.read(12);
-        }
+        this._readData(reader);
     }
 
     /**
      * @return {string}
-     * @abstract
      */
-    getSkillTreeClass() {}
+    getSkillTreeClass() {
+        return this.skillTreeClass;
+    }
 
     /**
      * @param {string} skillName
      * @return {number}
+     */
+    getSkillLevel(skillName) {
+        const id = Skills[skillName].getId();
+
+        return this.skills[id] || 0;
+    }
+
+    /**
+     * @param {BitReader} reader
+     * @protected
+     */
+    _readData(reader) {
+        this._readSkillTreeClass(reader);
+        while (this._readNextSkill(reader)) {}
+    }
+
+    /**
+     * @param {BitReader} reader
+     * @protected
      * @abstract
      */
-    getSkillLevel(skillName) {}
+    _readSkillTreeClass(reader) {}
+
+    /**
+     * @param {BitReader} reader
+     * @return {boolean}
+     * @protected
+     * @abstract
+     */
+    _readNextSkill(reader) {}
 }
 
-class SkillTreeHashVersion1Decoder extends BaseSkillTreeHashVersionDecoder {
+/**
+ * 4 BYTES        Hash encoding version
+ * 4 BYTES        Class index in SkillTreeClasses
+ * SkillStruct[]  Array of learned skills
+ * ZEROS
+ *
+ * SkillStruct:
+ * 10 BITS        Skill Id
+ * 1 BIT          1 - the skill level 10, else read level bites
+ * 5 BITS         the skill level
+ */
+class SkillTreeVersion1Reader extends BaseSkillTreeVersionReader {
     /**
      * @inheritDoc
      */
-    getSkillTreeClass() {
-        const skillTreeClassIndex = this.data.charCodeAt(0) & 0xF;
+    _readSkillTreeClass(reader) {
+        const skillTreeClassIndex = reader.read(4);
         const skillTreeClasses = SkillTreeClasses.getAll();
         if (skillTreeClasses.length <= skillTreeClassIndex) {
             new Error(`Undefined skill tree class index ${skillTreeClassIndex}`);
         }
 
-        return skillTreeClasses[skillTreeClassIndex];
+        this.skillTreeClass = skillTreeClasses[skillTreeClassIndex];
     }
 
     /**
      * @inheritDoc
      */
-    getSkillLevel(skillName) {
-        const id = Skills[skillName].id;
+    _readNextSkill(reader) {
+        const id = reader.read(10);
+        if (id === 0) {
+            return false;
+        }
 
-        return this.skills[id] || 0;
+        this.skills[id] = reader.read(1) === 1 ? 10 : reader.read(5);
+        return true;
     }
 }
 
-class SkillTreeHashVersionDecoderFactory {
+class SkillTreeHashVersionReaderFactory {
+    /**
+     * @param {string} data
+     * @return {BaseSkillTreeVersionReader}
+     */
     create(data) {
-        const version = data.charCodeAt(0) >> 4;
+        const reader = new BitReader(data);
+        const version = reader.read(4);
 
-        return new SkillTreeHashVersion1Decoder(data);
+        return new SkillTreeVersion1Reader(reader);
     }
 }
 
@@ -173,7 +226,7 @@ class BitReader {
         const leftBitsCount = ARRAY_SIZE - offset;
         let rightBitsCount = bitsCount - leftBitsCount;
 
-        let value = ((this.data[start] & (Math.pow(2,  leftBitsCount) - 1)) << rightBitsCount);
+        let value = (this.data[start] & (Math.pow(2,  leftBitsCount) - 1)) << rightBitsCount;
         let i = 1;
         while (rightBitsCount > ARRAY_SIZE) {
             rightBitsCount -= ARRAY_SIZE;
