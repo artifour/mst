@@ -94,7 +94,7 @@ export class Skill extends EmptySkill {
         const value = this.getValue(level);
 
         return this.description
-            .replace(/{value}/, Math.trunc(value))
+            .replace(/{value}/, Math.trunc(value).toString())
             .replace(/{value,}/, value.toFixed(2));
     }
 
