@@ -58,9 +58,9 @@ export class Skill extends EmptySkill {
      * @param {string|LevelCallback} description
      * @param {string|LevelCallback} icons
      * @param {string|Object.<number, number>|LevelCallback} values
-     * @param {number} maxLevel
-     * @param {Requirements|null} requires
-     * @param {number} requiredPoints
+     * @param {number=} maxLevel
+     * @param {Requirements|null=} requires
+     * @param {number=} requiredPoints
      */
     constructor(skillId = null, title, description, icons, values, maxLevel = 20, requires = null, requiredPoints = 1) {
         super();
