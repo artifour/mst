@@ -69,14 +69,14 @@ Skills.MG_GiganticStormStrengthener = new ClassSkill(
     20
 );
 Skills.MG_SpiralChargeStrengthener = new ClassSkill(
-    900,
+    null,
     'Spiral Charge Strengthener',
     'The damage caused by using the two-handed sword\n skill tree times increases by {value}.',
     'spiral-charge-strengthener',
     FORMULA_3
 );
 Skills.MG_SpiralChargeMastery = new ClassSkill(
-    901,
+    null,
     'Spiral Charge Mastery',
     'Added {value} sword explosion damage that occurs when y\nou use two-handed sword skills tree times.',
     'spiral-charge-mastery',
@@ -85,14 +85,14 @@ Skills.MG_SpiralChargeMastery = new ClassSkill(
     {MG_SpiralChargeStrengthener: 10}
 );
 Skills.MG_CrusherChargeStrengthener = new ClassSkill(
-    902,
+    null,
     'Crusher Charge Strengthener',
     'Increases the damage caused by explosion of sw\nords when using a one-handed sword skill tree time\ns by {value}.',
     'crusher-charge-strengthener',
     FORMULA_3
 );
 Skills.MG_CrusherChargeMastery = new ClassSkill(
-    903,
+    null,
     'Crusher Charge Mastery',
     '{value} additional sword damage that occurs when you use\na one-handed sword skill tree times.',
     'crusher-charge-mastery',
@@ -101,14 +101,14 @@ Skills.MG_CrusherChargeMastery = new ClassSkill(
     {MG_CrusherChargeStrengthener: 10}
 );
 Skills.MG_ElementalChargeStrengthener = new ClassSkill(
-    904,
+    null,
     'Elemental Charge Strengthener',
     'Increases the damage caused by explosion of sw\nords when using a one-handed sword skill tree time\ns by {value}.',
     'elemental-charge-strengthener',
     FORMULA_3
 );
 Skills.MG_ElementalChargeMastery = new ClassSkill(
-    905,
+    null,
     'Elemental Charge Mastery',
     '{value} additional sword damage that occurs when you use\na one-handed sword skill tree times.',
     'elemental-charge-mastery',
@@ -358,22 +358,22 @@ const MGSkillTreeSchema = {
                     dependency: SkillTreeSkillDependencies.vertical
                 },
                 null,
-                'IncreasesCriticalDamageRate'
+                null
             ],
             [
                 'RestoresAllMana',
                 null,
                 'AbsorbLife',
-                {
-                    name: 'IncreasesExcellentDamageRate',
-                    dependency: SkillTreeSkillDependencies.vertical
-                }
+                'IncreasesCriticalDamageRate'
             ],
             [
                 null,
                 'RestoresAllHP',
                 null,
-                null
+                {
+                    name: 'IncreasesExcellentDamageRate',
+                    dependency: SkillTreeSkillDependencies.vertical
+                }
             ],
             [
                 null,

@@ -35,7 +35,7 @@ class EmptySkill {
 }
 
 export class Skill extends EmptySkill {
-    /** @type number MU skill ID */
+    /** @type number|null MU skill ID */
     skillId;
     /** @type string */
     title;
@@ -53,7 +53,7 @@ export class Skill extends EmptySkill {
     requiredPoints;
 
     /**
-     * @param {number} skillId
+     * @param {number|null} skillId
      * @param {string} title
      * @param {string|LevelCallback} description
      * @param {string|LevelCallback} icons
@@ -62,7 +62,7 @@ export class Skill extends EmptySkill {
      * @param {Requirements|null} requires
      * @param {number} requiredPoints
      */
-    constructor(skillId, title, description, icons, values, maxLevel = 20, requires = null, requiredPoints = 1) {
+    constructor(skillId = null, title, description, icons, values, maxLevel = 20, requires = null, requiredPoints = 1) {
         super();
 
         this.skillId = skillId;

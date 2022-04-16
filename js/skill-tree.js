@@ -95,13 +95,6 @@ export class SkillTree {
     /**
      * @return {string}
      */
-    getSkillTreeClass() {
-        return this.skillTreeClass;
-    }
-
-    /**
-     * @return {string}
-     */
     getName() {
         return this.schema.name;
     }
