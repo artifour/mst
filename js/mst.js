@@ -12,6 +12,8 @@ import {ClassSelection} from './mst-class-selection.js';
         skillTree;
         /** @type SkillTooltip */
         skillTooltip;
+        /** @type boolean */
+        initialized = false;
 
         /**
          * @param {HTMLElement} container
@@ -21,6 +23,7 @@ import {ClassSelection} from './mst-class-selection.js';
             this.container = container;
             this.skillTree = new SkillTree();
             this.skillTooltip = new SkillTooltip(document.getElementById('mst-skill-tooltip'));
+
             this.init(hash);
         }
 
@@ -29,6 +32,8 @@ import {ClassSelection} from './mst-class-selection.js';
          */
         init(hash) {
             if (!hash || (hash.length < 1)) {
+                this.container.innerHTML = "";
+
                 new ClassSelection(this.container, function (skillTreeClass) {
                     this.skillTree.init({skillTreeClass: skillTreeClass});
                     this._rebuildTree();
@@ -39,7 +44,14 @@ import {ClassSelection} from './mst-class-selection.js';
             }
 
             this.skillTree.init({hash: hash});
+
+            if (this.initialized) {
+                this._updateTree();
+                return;
+            }
+
             this._rebuildTree();
+            this._updateTree();
             this._buildHash();
         }
 
@@ -54,12 +66,14 @@ import {ClassSelection} from './mst-class-selection.js';
             this.container.appendChild(nameElem);
 
             const pointsElem = this._createDiv('points');
-            pointsElem.innerHTML = 'Points: ' + this.skillTree.getPointsLeft();
+            pointsElem.innerHTML = 'Points: ';
             this.container.appendChild(pointsElem);
 
             this._initBranch(SkillTreeBranches.green);
             this._initBranch(SkillTreeBranches.blue);
             this._initBranch(SkillTreeBranches.red);
+
+            this.initialized = true;
         }
 
         /**
@@ -71,14 +85,10 @@ import {ClassSelection} from './mst-class-selection.js';
             branchElem.classList.add(branchName);
 
             const branchTitleElem = this._createDiv('table-column-title');
-            const branchTitle = this.skillTree.getBranchTitle(branchName);
-            const branchLevel = this.skillTree.getBranchLevel(branchName);
-            branchTitleElem.innerHTML = `${branchTitle}: ${branchLevel}`;
-
             branchElem.appendChild(branchTitleElem);
 
             for (let i = 0; i < 9; i++) {
-                const row = this.skillTree.getBranchRank(branchName, i);
+                const row = this.skillTree.getBranchRow(branchName, i);
                 if (!row) {
                     break;
                 }
@@ -88,8 +98,6 @@ import {ClassSelection} from './mst-class-selection.js';
             }
 
             this.container.appendChild(branchElem);
-
-            this._enableBranchRank(branchName, 1);
         }
 
         /**
@@ -146,7 +154,7 @@ import {ClassSelection} from './mst-class-selection.js';
             skillElem.appendChild(iconElem);
 
             const skillLevelElem = this._createDiv('skill-level');
-            skillLevelElem.innerHTML = this.skillTree.getSkillLevel(skillName);
+            skillLevelElem.innerHTML = '0';
             skillElem.appendChild(skillLevelElem);
 
             return skillElem;
@@ -165,33 +173,54 @@ import {ClassSelection} from './mst-class-selection.js';
         }
 
         /**
-         * @param {string} branchName
-         * @param {number} rank
-         * @param {boolean=} enable
          * @private
          */
-        _enableBranchRank(branchName, rank, enable = true) {
-            const skillNames = this.skillTree.getBranchRankSkillNames(branchName, rank);
-            for (let i = 0; i < skillNames.length; i++) {
-                this._enableSkill(skillNames[i], enable);
+        _updateTree() {
+            this._updateTreeLevel();
+            this._updateBranch(SkillTreeBranches.green);
+            this._updateBranch(SkillTreeBranches.blue);
+            this._updateBranch(SkillTreeBranches.red);
+        }
+
+        /**
+         * @param {string} branchName
+         * @private
+         */
+        _updateBranch(branchName) {
+            this._updateBranchLevel(branchName);
+
+            for (let i = 1; i < 10; i++) {
+                const skillNames = this.skillTree.getBranchRankSkillNames(branchName, i);
+
+                for (const skillName of skillNames) {
+                    this._updateSkill(skillName);
+                }
             }
         }
 
         /**
          * @param {string} skillName
-         * @param {boolean=} enable
          * @private
          */
-        _enableSkill(skillName, enable = true) {
+        _updateSkill(skillName) {
             const skillElem = document.getElementById(skillName);
+            const skillLevelElem = skillElem.querySelector('.skill-level');
 
-            if (enable && this.skillTree.isSkillLevelAccessible(skillName)) {
-                skillElem.classList.remove('disabled');
-                return;
+            const skillLevel = this.skillTree.getSkillLevel(skillName).toString();
+            if (skillLevelElem.innerHTML !== skillLevel) {
+                skillLevelElem.innerHTML = skillLevel;
             }
 
-            if (!enable && (this.skillTree.getSkillLevel(skillName) === 0)) {
-                skillElem.classList.add('disabled');
+            const disabled = skillElem.classList.contains('disabled');
+
+            if (this.skillTree.isSkillLevelAccessible(skillName)) {
+                if (disabled) {
+                    skillElem.classList.remove('disabled');
+                }
+            } else {
+                if (!disabled) {
+                    skillElem.classList.add('disabled');
+                }
             }
         }
 
@@ -226,37 +255,8 @@ import {ClassSelection} from './mst-class-selection.js';
                 return;
             }
 
-            this._buildHash();
-
-            const branchName = this.skillTree.getSkillBranchName(skillName);
-
             this.skillTooltip.show(this.skillTree, skillName);
-            this._updateBranchLevel(branchName);
-            this._updateTreeLevel();
-
-            const skillLevelElem = skillElem.querySelector('.skill-level');
-            skillLevelElem.innerHTML = skillLevel;
-
-            const rank = this.skillTree.getSkillRank(skillName);
-            if (rank >= 9) {
-                return;
-            }
-
-            const rankLevel = this.skillTree.getBranchRankLevel(branchName, rank);
-            if (rankLevel < 10) {
-                return;
-            }
-
-            this._enableBranchRank(branchName, rank + 1);
-
-            if (skillLevel < 10) {
-                return;
-            }
-
-            const dependentSkillNames = this.skillTree.getSkillDependentSkillNames(skillName);
-            for (const dependentSkillName of dependentSkillNames) {
-                this._enableSkill(dependentSkillName);
-            }
+            this._buildHash();
         }
 
         /**
@@ -285,33 +285,8 @@ import {ClassSelection} from './mst-class-selection.js';
                 return;
             }
 
-            this._buildHash();
-
-            const branchName = this.skillTree.getSkillBranchName(skillName);
-
             this.skillTooltip.show(this.skillTree, skillName);
-            this._updateBranchLevel(branchName);
-            this._updateTreeLevel();
-
-            const skillLevelElem = skillElem.querySelector('.skill-level');
-            skillLevelElem.innerHTML = skillLevel;
-
-            if (skillLevel >= 10) {
-                return;
-            }
-
-            const dependentSkillNames = this.skillTree.getSkillDependentSkillNames(skillName);
-            for (const dependentSkillName of dependentSkillNames) {
-                this._enableSkill(dependentSkillName, false);
-            }
-
-            const rank = this.skillTree.getSkillRank(skillName);
-            const rankLevel = this.skillTree.getBranchRankLevel(branchName, rank);
-            if (rankLevel >= 10) {
-                return;
-            }
-
-            this._enableBranchRank(branchName, rank + 1, false);
+            this._buildHash();
         }
 
         /**
@@ -380,5 +355,10 @@ import {ClassSelection} from './mst-class-selection.js';
 
     const container = document.getElementById('master-skill-tree');
     const hash = location.hash.slice(1);
-    new SkillTreeContainer(container, hash);
+    const skillTreeContainer = new SkillTreeContainer(container, hash);
+
+    window.onhashchange = () => {
+        const hash = location.hash.slice(1);
+        skillTreeContainer.init(hash);
+    }
 })();

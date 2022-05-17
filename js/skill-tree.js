@@ -143,7 +143,7 @@ export class SkillTree {
      * @param {number} rowIndex
      * @returns {SkillTreeSchemaRow}
      */
-    getBranchRank(branchName, rowIndex) {
+    getBranchRow(branchName, rowIndex) {
         return this.schema[branchName].rows[rowIndex];
     }
 
