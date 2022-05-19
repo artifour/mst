@@ -1,6 +1,6 @@
 .icon {
     --icon-scale: 2;
-    background: url(../images/new_Master_Icon.jpg);
+    background: url(../images/icons.webp);
     background-position: 0 0;
     background-size: calc(var(--icon-scale) * 512px), auto, cover;
     width: calc(var(--icon-scale) * 20px);
