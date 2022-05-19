@@ -350,6 +350,36 @@
     background-position-y: calc(var(--icon-scale) * -168px);
 }
 
+.icon.stick-strengthener {
+    background-position-x: calc(var(--icon-scale) * -300px);
+    background-position-y: calc(var(--icon-scale) * -168px);
+}
+
+.icon.other-world-tome-strengthener {
+    background-position-x: calc(var(--icon-scale) * -320px);
+    background-position-y: calc(var(--icon-scale) * -168px);
+}
+
+.icon.stick-mastery {
+    background-position-x: calc(var(--icon-scale) * -340px);
+    background-position-y: calc(var(--icon-scale) * -168px);
+}
+
+.icon.other-world-tome-mastery {
+    background-position-x: calc(var(--icon-scale) * -360px);
+    background-position-y: calc(var(--icon-scale) * -168px);
+}
+
+.icon.berserker-strengthener {
+    background-position-x: calc(var(--icon-scale) * -380px);
+    background-position-y: calc(var(--icon-scale) * -168px);
+}
+
+.icon.berserker-proficiency {
+    background-position-x: calc(var(--icon-scale) * -440px);
+    background-position-y: calc(var(--icon-scale) * -168px);
+}
+
 .icon.power-slash-strengthener {
     background-position-x: calc(var(--icon-scale) * -140px);
     background-position-y: calc(var(--icon-scale) * -196px);

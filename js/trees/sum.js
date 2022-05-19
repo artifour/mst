@@ -1,4 +1,4 @@
-import {ClassSkill, FORMULA_1, FORMULA_17, FORMULA_22, FORMULA_3, Skill, Skills} from '../skills.js';
+import {ClassSkill, FORMULA_1, FORMULA_17, FORMULA_22, FORMULA_283, FORMULA_3, FORMULA_4, Skills} from '../skills.js';
 import {SkillTreeClasses, SkillTreeSchemas, SkillTreeSkillDependencies} from '../skill-tree-schemas.js';
 
 Skills.SUM_DimensionWingsDefensePowUp = new ClassSkill(
@@ -123,17 +123,65 @@ Skills.SUM_InnovationMastery = new ClassSkill(
     'innovation-mastery',
     FORMULA_3, // TODO
     20,
-    {SUM_WeaknessStrengthener: 10}
+    {SUM_InnovationStrengthener: 10}
 );
 Skills.SUM_Blind = new ClassSkill(
     null,
     'Blind',
-    `Learn 'Blind'.\nThe skill Inflicts DMG to and blinds the target to block .`,
+    `Learns the skill 'Blind'.\nThe skill Inflicts DMG to and blinds the target to block its view, greatly reducing its attack success rate with a certain chance.\nThis skill can be used again after 5 seconds.`,
     'blind',
     FORMULA_1,
     10,
     null,
     10
+);
+Skills.SUM_StickStrengthener = new ClassSkill(
+    null,
+    'Stick Strengthener',
+    'Wizardry increases by {value} while equipping Stick.',
+    'stick-strengthener',
+    FORMULA_22
+);
+Skills.SUM_StickMastery = new ClassSkill(
+    null,
+    'Stick Mastery',
+    'PVP attack power increases by additional {value} while equipping Stick.',
+    'stick-mastery',
+    FORMULA_17,
+    20,
+    {SUM_StickStrengthener: 10}
+);
+Skills.SUM_OtherWorldTomeStrengthener = new ClassSkill(
+    null,
+    'Other World Tome Strengthener',
+    'Curse increases by {value} while equipping the Other World Tome.',
+    'other-world-tome-strengthener',
+    FORMULA_4
+);
+Skills.SUM_OtherWorldTomeMastery = new ClassSkill(
+    null,
+    'Other World Tome Mastery',
+    'Attack speed increases by {value} while equipping the Other World Tome.',
+    'other-world-tome-mastery',
+    FORMULA_283,
+    20,
+    {SUM_OtherWorldTomeStrengthener: 10}
+);
+Skills.SUM_BerserkerStrengthener = new ClassSkill(
+    null,
+    'Berserker Strengthener',
+    'Berserker skill increases Wizardry by additional {value}.',
+    'berserker-strengthener',
+    FORMULA_22
+);
+Skills.SUM_BerserkerProficiency = new ClassSkill(
+    null,
+    'Berserker Proficiency',
+    'Berserker skill increases Attack Speed by {value}, additionally reduces HP and Defense Decreas effect.',
+    'berserker-proficiency',
+    FORMULA_22,
+    20,
+    {SUM_BerserkerStrengthener: 10}
 );
 
 /**
@@ -142,7 +190,7 @@ Skills.SUM_Blind = new ClassSkill(
 const SUMSkillTreeSchema = {
     name: 'Dimension Summoner',
     green: {
-        name: 'Peace',
+        name: 'Guardian',
         rows: [
             [
                 'DurabilityReduction1',
@@ -222,7 +270,7 @@ const SUMSkillTreeSchema = {
         ]
     },
     blue: {
-        name: 'Wisdom',
+        name: 'Chaos',
         rows: [
             [
                 'AttackSuccessRateIncrease',
@@ -286,7 +334,7 @@ const SUMSkillTreeSchema = {
             ],
             [
                 null,
-                null,
+                'SUM_Blind',
                 null,
                 null
             ],
@@ -299,7 +347,7 @@ const SUMSkillTreeSchema = {
         ]
     },
     red: {
-        name: 'Overcome',
+        name: 'Honor',
         rows: [
             [
                 'AttackRate',
@@ -308,14 +356,20 @@ const SUMSkillTreeSchema = {
                 null
             ],
             [
-                null,
-                null,
+                'SUM_StickStrengthener',
+                'SUM_OtherWorldTomeStrengthener',
                 null,
                 null
             ],
             [
-                null,
-                null,
+                {
+                    name: 'SUM_StickMastery',
+                    dependency: SkillTreeSkillDependencies.vertical
+                },
+                {
+                    name: 'SUM_OtherWorldTomeMastery',
+                    dependency: SkillTreeSkillDependencies.vertical
+                },
                 null,
                 null
             ],
@@ -326,7 +380,7 @@ const SUMSkillTreeSchema = {
                 'MonsterAttackLifeIncrement'
             ],
             [
-                null,
+                'SUM_BerserkerStrengthener',
                 null,
                 null,
                 {
@@ -335,7 +389,10 @@ const SUMSkillTreeSchema = {
                 }
             ],
             [
-                null,
+                {
+                    name: 'SUM_BerserkerProficiency',
+                    dependency: SkillTreeSkillDependencies.vertical
+                },
                 null,
                 null,
                 null
