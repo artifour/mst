@@ -62,7 +62,7 @@ import {ClassSelection} from './mst-class-selection.js';
             this.container.innerHTML = '';
 
             const nameElem = this._createDiv('name');
-            nameElem.innerHTML = 'Class: ' + this.skillTree.getName();
+            nameElem.innerHTML = 'Class: ' + this.skillTree.getName() + ' <a href=/>[change]</a>';
             this.container.appendChild(nameElem);
 
             const pointsElem = this._createDiv('points');
