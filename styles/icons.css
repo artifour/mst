@@ -291,6 +291,65 @@
     background-position-y: calc(var(--icon-scale) * -112px);
 }
 
+.icon.XXX-wing-yellow {
+    background-position-x: calc(var(--icon-scale) * -240px);
+    background-position-y: calc(var(--icon-scale) * -112px);
+}
+
+.icon.explosion-strengthener {
+    background-position-x: calc(var(--icon-scale) * -460px);
+    background-position-y: calc(var(--icon-scale) * -140px);
+}
+
+.icon.requiem-strengthener {
+    background-position-x: calc(var(--icon-scale) * -480px);
+    background-position-y: calc(var(--icon-scale) * -140px);
+}
+
+.icon.pollution-strengthener {
+    background-position-y: calc(var(--icon-scale) * -168px);
+}
+
+.icon.sleep-strengthener {
+    background-position-x: calc(var(--icon-scale) * -80px);
+    background-position-y: calc(var(--icon-scale) * -168px);
+}
+
+.icon.chain-lightning-strengthener {
+    background-position-x: calc(var(--icon-scale) * -100px);
+    background-position-y: calc(var(--icon-scale) * -168px);
+}
+
+.icon.lightning-shock-strengthener {
+    background-position-x: calc(var(--icon-scale) * -120px);
+    background-position-y: calc(var(--icon-scale) * -168px);
+}
+
+.icon.sum-magic-mastery {
+    background-position-x: calc(var(--icon-scale) * -140px);
+    background-position-y: calc(var(--icon-scale) * -168px);
+}
+
+.icon.drain-life-strengthener {
+    background-position-x: calc(var(--icon-scale) * -160px);
+    background-position-y: calc(var(--icon-scale) * -168px);
+}
+
+.icon.weakness-strengthener {
+    background-position-x: calc(var(--icon-scale) * -180px);
+    background-position-y: calc(var(--icon-scale) * -168px);
+}
+
+.icon.innovation-strengthener {
+    background-position-x: calc(var(--icon-scale) * -200px);
+    background-position-y: calc(var(--icon-scale) * -168px);
+}
+
+.icon.blind {
+    background-position-x: calc(var(--icon-scale) * -220px);
+    background-position-y: calc(var(--icon-scale) * -168px);
+}
+
 .icon.power-slash-strengthener {
     background-position-x: calc(var(--icon-scale) * -140px);
     background-position-y: calc(var(--icon-scale) * -196px);
@@ -339,6 +398,25 @@
 .icon.elemental-def-increase {
     background-position-x: calc(var(--icon-scale) * -60px);
     background-position-y: calc(var(--icon-scale) * -308px);
+}
+
+.icon.greatness-mastery {
+    background-position-x: calc(var(--icon-scale) * -380px);
+    background-position-y: calc(var(--icon-scale) * -308px);
+}
+
+.icon.innovation-mastery {
+    background-position-x: calc(var(--icon-scale) * -400px);
+    background-position-y: calc(var(--icon-scale) * -308px);
+}
+
+.icon.pollution-strengthener-2 {
+    background-position-x: calc(var(--icon-scale) * -480px);
+    background-position-y: calc(var(--icon-scale) * -308px);
+}
+
+.icon.pollution-mastery {
+    background-position-y: calc(var(--icon-scale) * -336px);
 }
 
 .icon.protection-shield {
