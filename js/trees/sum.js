@@ -1,4 +1,14 @@
-import {ClassSkill, FORMULA_1, FORMULA_17, FORMULA_22, FORMULA_283, FORMULA_3, FORMULA_4, Skills} from '../skills.js';
+import {
+    ClassSkill,
+    FORMULA_1,
+    FORMULA_17,
+    FORMULA_175,
+    FORMULA_22,
+    FORMULA_283,
+    FORMULA_3,
+    FORMULA_4,
+    Skills
+} from '../skills.js';
 import {SkillTreeClasses, SkillTreeSchemas, SkillTreeSkillDependencies} from '../skill-tree-schemas.js';
 
 Skills.SUM_DimensionWingsDefensePowUp = new ClassSkill(
@@ -179,9 +189,48 @@ Skills.SUM_BerserkerProficiency = new ClassSkill(
     'Berserker Proficiency',
     'Berserker skill increases Attack Speed by {value}, additionally reduces HP and Defense Decreas effect.',
     'berserker-proficiency',
-    FORMULA_22,
+    FORMULA_283, // TODO
     20,
     {SUM_BerserkerStrengthener: 10}
+);
+Skills.SUM_DarknessStrengthener = new ClassSkill(
+    null,
+    'Darkness Strengthener',
+    'Increases Curse Damage by {value} when using Darkness skill.',
+    'darkness-strengthener',
+    FORMULA_22
+);
+Skills.SUM_DarknessMastery = new ClassSkill(
+    null,
+    'Darkness Mastery',
+    'Increases Defense by {value} when using Darkness skill and removes HP drop effect.',
+    'darkness-mastery',
+    FORMULA_175,
+    20,
+    {SUM_DarknessStrengthener: 10}
+);
+Skills.SUM_MinimumWizardryCurseIncrease = new ClassSkill(
+    471,
+    'Minimum Wizardry/Curse Increase',
+    'Minimum Wizardry and Curse increases by {value}.',
+    'minimum-wizardry-curse-increase',
+    FORMULA_22
+);
+Skills.SUM_MaximumWizardryCurseIncrease = new ClassSkill(
+    473,
+    'Maximum Wizardry/Cruse Increase',
+    'Maximum Wizardry and Curse increases by {value}.',
+    'maximum-wizardry-curse-increase',
+    FORMULA_3,
+    20,
+    {SUM_MinimumWizardryCurseIncrease: 10}
+);
+Skills.SUM_PainOfCurse = new ClassSkill(
+    null,
+    'Paint of Curse',
+    'Increases Magical Damage and Curse by {value} when attacking an enemy over 4 tiles away.',
+    'paint-of-curse',
+    FORMULA_22
 );
 
 /**
@@ -381,8 +430,8 @@ const SUMSkillTreeSchema = {
             ],
             [
                 'SUM_BerserkerStrengthener',
-                null,
-                null,
+                'SUM_DarknessStrengthener',
+                'SUM_MinimumWizardryCurseIncrease',
                 {
                     name: 'MonsterAttackManaIncrement',
                     dependency: SkillTreeSkillDependencies.vertical
@@ -393,8 +442,14 @@ const SUMSkillTreeSchema = {
                     name: 'SUM_BerserkerProficiency',
                     dependency: SkillTreeSkillDependencies.vertical
                 },
-                null,
-                null,
+                {
+                    name: 'SUM_DarknessMastery',
+                    dependency: SkillTreeSkillDependencies.vertical
+                },
+                {
+                    name: 'SUM_MaximumWizardryCurseIncrease',
+                    dependency: SkillTreeSkillDependencies.vertical
+                },
                 null
             ],
             [
@@ -404,7 +459,7 @@ const SUMSkillTreeSchema = {
                 'IncreasesCriticalDamageRate'
             ],
             [
-                null,
+                'PainOfCurse',
                 'RestoresAllHP',
                 null,
                 {

@@ -375,8 +375,18 @@
     background-position-y: calc(var(--icon-scale) * -168px);
 }
 
+.icon.minimum-wizardry-curse-increase {
+    background-position-x: calc(var(--icon-scale) * -420px);
+    background-position-y: calc(var(--icon-scale) * -168px);
+}
+
 .icon.berserker-proficiency {
     background-position-x: calc(var(--icon-scale) * -440px);
+    background-position-y: calc(var(--icon-scale) * -168px);
+}
+
+.icon.maximum-wizardry-curse-increase {
+    background-position-x: calc(var(--icon-scale) * -460px);
     background-position-y: calc(var(--icon-scale) * -168px);
 }
 
@@ -430,6 +440,16 @@
     background-position-y: calc(var(--icon-scale) * -308px);
 }
 
+.icon.darkness-strengthener {
+    background-position-x: calc(var(--icon-scale) * -340px);
+    background-position-y: calc(var(--icon-scale) * -308px);
+}
+
+.icon.darkness-mastery {
+    background-position-x: calc(var(--icon-scale) * -360px);
+    background-position-y: calc(var(--icon-scale) * -308px);
+}
+
 .icon.greatness-mastery {
     background-position-x: calc(var(--icon-scale) * -380px);
     background-position-y: calc(var(--icon-scale) * -308px);
@@ -471,6 +491,11 @@
 .icon.absorb-life {
     background-position-x: calc(var(--icon-scale) * -60px);
     background-position-y: calc(var(--icon-scale) * -364px);
+}
+
+.icon.pain-of-curse {
+    background-position-x: calc(var(--icon-scale) * -200px);
+    background-position-y: calc(var(--icon-scale) * -392px);
 }
 
 .icon.spiral-charge-strengthener {

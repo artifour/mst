@@ -201,7 +201,10 @@ export const FORMULA_40 = level => (1+(((((Math.pow(level-30, 3)+25000)/499)/6))
 export const FORMULA_41 = level => (1+(((((Math.pow(level-30, 3)+25000)/499)/6))))*13;
 export const FORMULA_42 = level => (1+(((((Math.pow(level-30, 3)+25000)/499)/6))))*14;
 export const FORMULA_162 = level => level*3.5;
+export const FORMULA_175 = level => (1+(((((Math.pow(level-30, 3)+25000)/499)/6))))*33.3;
 export const FORMULA_283 = level => (1+(((Math.pow(level-30, 3)+25000)/499)/8))-0.07475;
+
+export const FORMULA_STAT = level => [14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 1000][level];
 
 export const Skills = {
     /* GREEN
@@ -330,7 +333,7 @@ export const Skills = {
         'Energy Increase',
         `Energy increases by {value}.`,
         'energy-increase',
-        FORMULA_40, // TODO
+        FORMULA_STAT, // TODO
         20
     ),
     StaminaIncrease: new Skill(
@@ -338,7 +341,7 @@ export const Skills = {
         'Stamina Increase',
         `Stamina increases by {value}.`,
         'stamina-increase',
-        FORMULA_40, // TODO
+        FORMULA_STAT, // TODO
         20
     ),
     AgilityIncrease: new Skill(
@@ -346,7 +349,7 @@ export const Skills = {
         'Agility Increase',
         `Agility increases by {value}.`,
         'agility-increase',
-        FORMULA_40, // TODO
+        FORMULA_STAT, // TODO
         20
     ),
     StrengthIncrease: new Skill(
@@ -354,7 +357,7 @@ export const Skills = {
         'Strength Increase',
         `Strength increases by {value}.`,
         'strength-increase',
-        FORMULA_40, // TODO
+        FORMULA_STAT, // TODO
         20
     ),
     WeaponBlock: new Skill(
