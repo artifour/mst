@@ -182,6 +182,7 @@ export const FORMULA_6 = level => 52/(1+(((((Math.pow(level-30, 3)+25000)/499)/6
 export const FORMULA_7 = level => (1+(((((Math.pow(level-30, 3)+25000)/499)/6))))*1.5;
 export const FORMULA_8 = level => (1+(((((Math.pow(level-30, 3)+25000)/499)/50)*100)/12))*23;
 export const FORMULA_9 = level => (1+(((((Math.pow(level-30, 3)+25000)/499)/50)*100)/12))*85;
+export const FORMULA_10 = level => (0.8+(((((Math.pow(level-30, 3)+25000)/499)/50)*100)/12))*8;
 export const FORMULA_11 = level => 11/(1+(((((Math.pow(level-30, 3)+25000)/499)/50)*100)/12));
 export const FORMULA_12 = level => (1+(((((Math.pow(level-30, 3)+25000)/499)/50)*100)/12))*85*6;
 export const FORMULA_13 = level => (1+(((((Math.pow(level-30, 3)+25000)/499)/50)*100)/12))*85*5;
@@ -1016,7 +1017,7 @@ export const Skills = {
         'Shield Strengthener',
         `Defense increases by {value} while equipping Shield.`,
         'shield-strengthener',
-        function (level) { return level/20; },
+        FORMULA_10,
         20
     ),
     ShieldMastery: new Skill(
@@ -1024,7 +1025,7 @@ export const Skills = {
         'Shield Mastery',
         `Defense increases by {value} while equipping a Shield.`,
         'shield-mastery',
-        function (level) { return (1+(((((Math.pow(level-30, 3)+25000)/499)/6))))*10; },
+        FORMULA_17,
         20,
         {ShieldStrengthener: 10}
     ),

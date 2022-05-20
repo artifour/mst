@@ -242,18 +242,53 @@
     background-position-y: calc(var(--icon-scale) * -84px);
 }
 
+.icon.expansion-of-wizardry-power-up {
+    background-position-x: calc(var(--icon-scale) * -100px);
+    background-position-y: calc(var(--icon-scale) * -84px);
+}
+
+.icon.inferno-strengthener {
+    background-position-x: calc(var(--icon-scale) * -120px);
+    background-position-y: calc(var(--icon-scale) * -84px);
+}
+
+.icon.expansion-of-wizardry-mastery {
+    background-position-x: calc(var(--icon-scale) * -160px);
+    background-position-y: calc(var(--icon-scale) * -84px);
+}
+
 .icon.evil-spirit-strengthener {
     background-position-x: calc(var(--icon-scale) * -200px);
     background-position-y: calc(var(--icon-scale) * -84px);
 }
 
-.icon.ice-strengthener {
+.icon.decay-strengthener {
     background-position-x: calc(var(--icon-scale) * -240px);
+    background-position-y: calc(var(--icon-scale) * -84px);
+}
+
+.icon.hellfire-strengthener {
+    background-position-x: calc(var(--icon-scale) * -260px);
     background-position-y: calc(var(--icon-scale) * -84px);
 }
 
 .icon.ice-strengthener {
     background-position-x: calc(var(--icon-scale) * -280px);
+    background-position-y: calc(var(--icon-scale) * -84px);
+}
+
+.icon.meteor-strengthener {
+    background-position-x: calc(var(--icon-scale) * -300px);
+    background-position-y: calc(var(--icon-scale) * -84px);
+}
+
+.icon.ice-storm-strengthener {
+    background-position-x: calc(var(--icon-scale) * -320px);
+    background-position-y: calc(var(--icon-scale) * -84px);
+}
+
+.icon.nova-strengthener {
+    background-position-x: calc(var(--icon-scale) * -340px);
     background-position-y: calc(var(--icon-scale) * -84px);
 }
 
@@ -267,12 +302,32 @@
     background-position-y: calc(var(--icon-scale) * -84px);
 }
 
+.icon.shield-strengthener {
+    background-position-x: calc(var(--icon-scale) * -480px);
+    background-position-y: calc(var(--icon-scale) * -84px);
+}
+
 .icon.one-handed-staff-mastery {
     background-position-y: calc(var(--icon-scale) * -112px);
 }
 
 .icon.two-handed-staff-mastery {
     background-position-x: calc(var(--icon-scale) * -20px);
+    background-position-y: calc(var(--icon-scale) * -112px);
+}
+
+.icon.soul-barrier-strengthener {
+    background-position-x: calc(var(--icon-scale) * -60px);
+    background-position-y: calc(var(--icon-scale) * -112px);
+}
+
+.icon.soul-barrier-proficiency {
+    background-position-x: calc(var(--icon-scale) * -80px);
+    background-position-y: calc(var(--icon-scale) * -112px);
+}
+
+.icon.soul-barrier-mastery {
+    background-position-x: calc(var(--icon-scale) * -120px);
     background-position-y: calc(var(--icon-scale) * -112px);
 }
 
@@ -294,6 +349,11 @@
 .icon.XXX-wing-yellow {
     background-position-x: calc(var(--icon-scale) * -240px);
     background-position-y: calc(var(--icon-scale) * -112px);
+}
+
+.icon.shield-mastery {
+    background-position-x: calc(var(--icon-scale) * -300px);
+    background-position-y: calc(var(--icon-scale) * -140px);
 }
 
 .icon.explosion-strengthener {
@@ -400,11 +460,6 @@
     background-position-y: calc(var(--icon-scale) * -196px);
 }
 
-.icon.inferno-strengthener {
-    background-position-x: calc(var(--icon-scale) * -220px);
-    background-position-y: calc(var(--icon-scale) * -196px);
-}
-
 .icon.fire-slash-strengthener {
     background-position-x: calc(var(--icon-scale) * -300px);
     background-position-y: calc(var(--icon-scale) * -196px);
@@ -490,6 +545,16 @@
 
 .icon.absorb-life {
     background-position-x: calc(var(--icon-scale) * -60px);
+    background-position-y: calc(var(--icon-scale) * -364px);
+}
+
+.icon.grand-magic-powup {
+    background-position-x: calc(var(--icon-scale) * -320px);
+    background-position-y: calc(var(--icon-scale) * -364px);
+}
+
+.icon.illusion {
+    background-position-x: calc(var(--icon-scale) * -340px);
     background-position-y: calc(var(--icon-scale) * -364px);
 }
 
